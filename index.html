@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>편입 영어 문법</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday study tool, quiet and exact, modelled on the practice site the user pointed to
+   IDEA a workbook that follows the lecture notes' table of contents, chapter → section → problem
+   PICTURE the problem itself: the English sentence set large with (A)–(D) underlines beside the answer sheet
+   COLOUR white paper, near-black ink, navy primary buttons, teal for progress and correct, red for wrong
+   TYPE Noto Sans KR for the interface + Source Serif 4 for English sentences
+   LAYOUT 1040px column; problem page splits question | answer on laptops, stacks question → answer on phones */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#111418);--soft:light-dark(#f4f6f8,#181d23);--line:light-dark(#e1e6eb,#2a3139);--ink:light-dark(#151a20,#eef1f4);--mute:light-dark(#5d6874,#9da8b4);--navy:light-dark(#1d2b3b,#e3ebf3);--onnavy:light-dark(#ffffff,#111418);--teal:light-dark(#167a68,#55c7ae);--tealbg:light-dark(#e5f3ef,#132d28);--red:light-dark(#c4313c,#ff7d86);--redbg:light-dark(#fcebec,#35171a);--obj:light-dark(#2456a3,#93b6ee);--objbg:light-dark(#e9f0fb,#18263a);--sub:light-dark(#985a00,#f1c272);--subbg:light-dark(#fcf1df,#33270f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 "Noto Sans KR",system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+button{font:inherit;color:inherit}
+.top{border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+.topin{max-width:1040px;margin:0 auto;padding:0 max(4vw,16px);display:flex;align-items:center;justify-content:space-between;gap:8px 18px;flex-wrap:wrap;min-height:58px}
+.brand{font-weight:700;text-decoration:none;font-size:17px}
+.nav{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+.nav a{text-decoration:none;padding:10px 12px;border-radius:8px;font-size:15px;color:var(--mute)}
+.nav a[aria-current=page]{color:var(--ink);font-weight:500;background:var(--soft)}
+.save{font-size:13px;color:var(--mute);padding-left:8px}
+main{max-width:1040px;margin:0 auto;padding:28px max(4vw,16px) 64px}
+h1{font-size:clamp(28px,4vw,36px);line-height:1.15;letter-spacing:-.02em;margin:6px 0 10px}
+.h2{font-size:22px;margin:40px 0 14px;letter-spacing:-.01em}
+.lead{color:var(--mute);margin:0 0 18px;max-width:62ch}
+.ser{color:var(--teal);font-weight:500;font-size:14px;margin:0}
+.back{display:inline-block;text-decoration:none;color:var(--mute);font-size:14px;padding:6px 0}
+.back:hover{color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:10px}
+.card{border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:8px;background:var(--bg)}
+.card h2{font-size:20px;line-height:1.3;margin:0}
+.desc{margin:0;color:var(--mute);font-size:15px;flex:1}
+.stat{margin:0;font-size:13px;color:var(--mute)}
+.prog{display:grid;gap:6px;font-size:14px;margin:6px 0 4px}
+.prog i{display:block;height:6px;border-radius:3px;background:var(--soft);overflow:hidden}
+.prog b{display:block;height:100%;background:var(--teal);border-radius:3px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;border:0;background:var(--navy);color:var(--onnavy);font-weight:500;text-decoration:none;cursor:pointer;font-size:15px}
+.btn.alt{background:var(--teal);color:var(--onnavy)}
+.btn kbd{font:12px "Noto Sans KR",sans-serif;opacity:.75}
+.ghost{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:15px;text-decoration:none}
+.ghost:disabled{color:var(--mute);cursor:default}
+.btn:focus-visible,.ghost:focus-visible,a:focus-visible,.opt:focus-visible,.chip:focus-visible,input:focus-visible{outline:3px solid var(--obj);outline-offset:2px}
+.band{margin-top:16px;border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap;background:var(--soft)}
+.band h2{margin:0 0 2px;font-size:18px}
+.band p{margin:0;color:var(--mute);font-size:15px}
+.mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:18px 0}
+.mode .card h2{font-size:18px}
+.kline{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--mute);margin:0 0 6px}
+.kline b{color:var(--ink)}
+.tocch{border-top:1px solid var(--line);padding:14px 0 10px}
+.toch{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;text-decoration:none;gap:10px;padding:4px 0}
+.num{font:600 22px/1 "Source Serif 4",Georgia,serif;color:var(--teal)}
+.toch b{display:block;font-size:17px}
+.toch small{color:var(--mute);font-size:13px}
+.toch:hover b{text-decoration:underline}
+.tocch ul{list-style:none;margin:6px 0 0;padding:0 0 0 54px}
+.tocch li a{display:grid;grid-template-columns:2.6em minmax(0,1fr) auto;gap:8px;padding:7px 0;text-decoration:none;font-size:15px;border-bottom:1px dashed var(--line)}
+.tocch li:last-child a{border-bottom:0}
+.sl{color:var(--mute)}
+.sn{color:var(--mute);font-size:13px;white-space:nowrap}
+.tocch li a:hover .st{text-decoration:underline}
+.filters{display:flex;flex-direction:column;gap:8px;margin:18px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{min-height:38px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:14px}
+.chip[aria-pressed=true]{background:var(--navy);color:var(--onnavy);border-color:var(--navy)}
+.sec{border:1px solid var(--line);border-radius:12px;margin-top:14px;overflow:hidden}
+.sh{display:flex;justify-content:space-between;gap:4px 12px;flex-wrap:wrap;padding:12px 16px;background:var(--soft)}
+.sh b{font-size:16px}
+.sh span{font-size:13px;color:var(--mute)}
+.row{display:grid;grid-template-columns:20px auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--line);text-decoration:none}
+.row:hover .rt{text-decoration:underline}
+.empty{padding:14px 16px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+.dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--line)}
+.dot.ok{border-color:var(--teal);background:var(--teal);box-shadow:inset 0 0 0 3px var(--bg)}
+.dot.no{border-color:var(--red);background:var(--redbg)}
+.tag{display:inline-block;font-size:12px;font-weight:500;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.tag.obj{background:var(--objbg);color:var(--obj)}
+.tag.sub{background:var(--subbg);color:var(--sub)}
+.lv{font-size:13px;color:var(--mute);white-space:nowrap}
+.lv.l1{color:var(--teal)}.lv.l3{color:var(--red)}
+.cnav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:24px}
+.ptop{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;margin-bottom:14px;font-size:14px;color:var(--mute)}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;align-items:start}
+.pane{border:1px solid var(--line);border-radius:12px;padding:clamp(18px,2.6vw,26px);background:var(--bg)}
+.tags{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.pt{font-size:clamp(22px,3vw,28px);margin:0 0 4px}
+.src{margin:0 0 14px;color:var(--mute);font-size:14px}
+.ins{margin:0;font-weight:500}
+.sent{font-family:"Source Serif 4",Georgia,serif;font-size:clamp(19px,2.2vw,22px);line-height:2.25;background:var(--soft);border-radius:10px;padding:16px 18px;margin-top:12px;overflow-wrap:anywhere}
+.u{display:inline-flex;flex-direction:column;align-items:center;line-height:1.35}
+.u>span{text-decoration:underline 1.5px;text-underline-offset:5px}
+.u>b{font:500 12px/1.3 "Noto Sans KR",sans-serif;color:var(--mute)}
+.u.good>span{color:var(--teal)}.u.bad>span{color:var(--red);text-decoration-style:wavy}
+.u1{text-decoration:underline 1.5px;text-underline-offset:5px}
+.blank{display:inline-block;min-width:5.5em;border-bottom:2px solid currentColor;line-height:1.3;text-align:center}
+.blank.on{color:var(--teal);padding:0 .3em}
+.ah{font-size:16px;margin:0 0 12px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;min-height:50px;padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);text-align:left;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt:disabled{cursor:default}
+.bub{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--mute);display:grid;place-items:center;font-size:13px;font-weight:500}
+.opt .ot{font-family:"Source Serif 4",Georgia,serif;font-size:17px}
+.opt.sel{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.opt.sel .bub{background:var(--navy);border-color:var(--navy);color:var(--onnavy)}
+.opt.ok{border-color:var(--teal);background:var(--tealbg)}
+.opt.ok .bub{background:var(--teal);border-color:var(--teal);color:var(--onnavy)}
+.opt.no{border-color:var(--red);background:var(--redbg)}
+.opt.no .bub{background:var(--red);border-color:var(--red);color:var(--onnavy)}
+.inp{width:100%;min-height:50px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:17px "Source Serif 4",Georgia,serif}
+.inp:disabled{background:var(--soft)}
+.help{font-size:13px;color:var(--mute);margin:8px 0 0}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hints{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.hints li{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:15px}
+.hints li b{color:var(--teal);margin-right:6px;font-weight:500}
+.res{margin:14px 0 0;font-weight:700;font-size:17px}
+.res.ok{color:var(--teal)}.res.no{color:var(--red)}
+.res small{font-weight:400;color:var(--mute);font-size:14px;margin-left:6px}
+.solbtn{width:100%;margin-top:14px}
+.sol{margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+.sol p{margin:0 0 8px}
+.lab{display:inline-block;min-width:3em;font-size:13px;color:var(--mute)}
+.serif{font-family:"Source Serif 4",Georgia,serif;font-size:17px}
+.exp{background:var(--soft);border-radius:8px;padding:12px 14px}
+.pnav{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+.exbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.timer{font:600 20px "Source Serif 4",Georgia,serif;font-variant-numeric:tabular-nums}
+.timer.low{color:var(--red)}
+.setup{display:grid;gap:18px;max-width:640px}
+.setup h3{margin:0 0 8px;font-size:16px}
+.big{display:flex;align-items:baseline;gap:8px;margin:6px 0}
+.big b{font:600 clamp(52px,9vw,72px)/1 "Source Serif 4",Georgia,serif;color:var(--teal)}
+.big span{font-size:22px;color:var(--mute)}
+.figs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 6px}
+.fig{border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.fig b{display:block;font:600 clamp(24px,3.4vw,32px)/1.15 "Source Serif 4",Georgia,serif}
+.fig span{font-size:13px;color:var(--mute)}
+.bars{display:grid;gap:4px}
+.bar{display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr) 4.6em 3.4em;gap:12px;align-items:center;min-height:36px;font-size:14px;text-decoration:none}
+.bar i{display:block;height:8px;border-radius:4px;background:var(--soft);overflow:hidden}
+.bar i b{display:block;height:100%;background:var(--teal)}
+.bar .v{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar .m{text-align:right;color:var(--mute);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar:hover .bn{text-decoration:underline}
+.bn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note{font-size:13px;color:var(--mute);margin-top:28px}
+@media(max-width:900px){.cards{grid-template-columns:minmax(0,1fr)}.pgrid{grid-template-columns:minmax(0,1fr)}.figs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.mode{grid-template-columns:minmax(0,1fr)}.tocch ul{padding-left:0}.row{grid-template-columns:18px minmax(0,1fr) auto;row-gap:2px}.row .tag{grid-column:2;justify-self:start}.row .rt{grid-column:2}.row .lv{grid-column:3;grid-row:1}.bar{grid-template-columns:minmax(0,1fr) 4.4em 3.2em}.bar i{grid-column:1/-1;grid-row:2}.nav a{padding:10px 8px}.save{display:none}}
+@media(prefers-reduced-motion:no-preference){.res{animation:pop .25s ease-out}@keyframes pop{from{transform:translateY(4px);opacity:0}to{transform:none;opacity:1}}}
+</style>
+</head>
+<body>
+<header class="top"><div class="topin"><a class="brand" href="#home">편입 영어 문법</a><nav class="nav" aria-label="주요 메뉴"><a href="#home" data-n="home">차례</a><a href="#exam" data-n="exam">모의고사</a><a href="#me" data-n="me">내 기록</a><span class="save" id="save">기록은 이 브라우저에 저장돼</span></nav></div></header>
+<main id="app"></main>
+<script>
+{
+const BOOKS=[
+{id:"b1",name:"이론편 I",sub:"동사를 중심으로 문장의 뼈대 세우기",desc:"동사의 문형부터 시제, 태, 조동사, 가정법까지 강의자료의 강과 절을 따라 풀어.",ch:[1,2,3,4,5]},
+{id:"b2",name:"이론편 II",sub:"접속사와 준동사로 문장 넓히기",desc:"등위접속사, 명사절·형용사절·부사절, 부정사·동명사·분사를 절마다 풀어.",ch:[6,7,8,9,10,11,12]},
+{id:"b3",name:"이론편 III",sub:"품사별로 다지기",desc:"지금은 13강 명사까지 있어. 관사·대명사·형용사·부사·비교·일치는 자료를 받으면 이어서 넣을게.",ch:[13]}
+];
+const CH={
+1:{t:"동사의 의미와 문형",pg:"5~48",s:[["A","제1형식","7~9"],["B","제2형식","10~11"],["C","제3형식","12~34"],["D","제4형식","35"],["E","제5형식","36~42"],["F","주의동사","43~48"]]},
+2:{t:"시제와 상",pg:"49~69",s:[["A","기본시제","50~57"],["B","완료상","58~63"],["C","진행상","64~67"],["D","시제일치","68~69"]]},
+3:{t:"태",pg:"71~90",s:[["A·B","능동태와 수동태","72~74"],["C","능동태와 수동태의 구별","75~77"],["D","3형식 동사의 수동태","78~79"],["E","타동사구의 수동태","80~81"],["F","4형식 문장의 수동태","82"],["G","5형식 동사의 수동태","83~84"],["H","기타 수동태와 주의사항","85~90"]]},
+4:{t:"조동사와 법표현",pg:"91~110",s:[["A","주 조동사","92~94"],["B","서법 조동사 기본 주의사항","95~96"],["C","서법 조동사의 의미와 용법","97~106"],["E","조동사 + have p.p.","107~110"]]},
+5:{t:"가정법",pg:"111~127",s:[["","법의 종류","112~113"],["A","가정법 과거","114"],["B","가정법 과거완료","115~116"],["C","혼합 가정법","117~118"],["D","가정법 현재","119~120"],["E","가정법 미래","121"],["G","가정절 도치","122"],["H","기타 가정법","123~127"]]},
+6:{t:"등위접속사",pg:"5~18",s:[["A","등위접속사의 접속 주의사항","6~7"],["B","등위접속사의 종류와 용법","8~13"],["C","준등위접속사","14~15"],["D","상관접속사와 접속부사","16~18"]]},
+7:{t:"종속접속사 - 명사절",pg:"21~34",s:[["A","명사절의 유형","22"],["B","that","23~24"],["C","if와 whether","25~26"],["D","의문사절","27~29"],["E","자유관계절","30~32"],["F","화법절","33~34"]]},
+8:{t:"종속접속사 - 형용사절",pg:"37~59",s:[["","관계사의 기초","38~39"],["A","관계사의 종류","40~50"],["D","전치사의 목적어로 쓰인 관계사","51~53"],["E","관계사의 생략","54~56"],["F","복합 관계사","57~59"]]},
+9:{t:"종속접속사 - 부사절",pg:"61~78",s:[["","부사절 기본 주의사항","62~63"],["A","장소절","64"],["B","조건·양보·목적·결과·양태절","64~71"],["C","시간절","72~74"],["D","기타 주의 구문","75~78"]]},
+10:{t:"부정사",pg:"79~98",s:[["A","부정사의 일반 주의사항","80~81"],["B","부정사의 품사적 용법","82~91"],["C","부정사의 동사적 성격","92~97"],["D","분리 부정사와 대부정사","98"]]},
+11:{t:"동명사",pg:"101~118",s:[["A","동명사의 일반 주의사항","102~103"],["B","동명사의 품사적 용법","104~111"],["C","동명사의 동사적 성격","112~118"]]},
+12:{t:"분사",pg:"121~136",s:[["A·B","분사의 종류","123~126"],["C","분사의 품사적 용법","127~134"],["D","분사의 동사적 성격","135~136"]]},
+13:{t:"명사",pg:"5~28",s:[["A","명사의 역할과 자리","6~7"],["B","명사의 종류","8~12"],["C","명사의 전용","13"],["D","가산명사와 불가산명사","14~18"],["E","명사의 복수형","19~22"],["F","분화명사와 상호복수명사","23"],["G","명사의 성","24~25"],["H","명사와 소유","26~28"]]}
+};
+const P=[
+// 1강
+{id:"1-01",c:1,s:0,k:"err",lv:1,t:"write가 1형식일 때",q:"This mechanical pencil [writes] very [smooth], so I [have used] it [for] years.",a:1,x:"smoothly",h:["write, read, sell처럼 '~하게 써지다/읽히다/팔리다'로 쓰이는 1형식 동사를 떠올려 봐.","1형식 동사는 보어를 안 받으니까, 동사를 꾸미는 말은 부사여야 해."],e:"write, read, sell, wash가 '~하게 써지다(읽히다, 팔리다)'의 뜻이면 1형식 완전자동사야. 보어가 아니라 부사의 수식을 받으니까 smooth가 아니라 smoothly. (This book reads easy도 같은 이유로 easily가 맞아.)"},
+{id:"1-02",c:1,s:0,k:"blank",lv:2,t:"유도부사 there와 주어",q:"___ on the desk when I came into the office.",o:["There was the letter","There was a letter","A letter there was","There a letter was"],a:1,h:["There + be 구문의 주어로 어떤 명사가 오는지 생각해 봐.","처음 소개하는 불특정한 것이면 a/some, 이미 아는 특정한 것이면 there 구문을 안 써."],e:"There + be + 주어 구문은 처음 등장하는 불특정 명사(a, some, no + 명사)를 소개할 때 써. the, my 같은 한정어가 붙은 특정 명사는 The letter was on the desk.처럼 주어를 앞에 둬."},
+{id:"1-03",c:1,s:1,k:"fix",lv:1,t:"오감동사의 보어",q:"Good medicine [tastes bitterly] to the mouth.",a:["tastes bitter"],h:["taste, look, sound, smell, feel 뒤에 오는 말의 품사를 생각해 봐.","오감동사는 2형식이라 보어가 필요해."],e:"look, taste, sound, smell, feel은 2형식 오감동사라 뒤에 형용사 보어가 와. bitterly(부사)가 아니라 bitter."},
+{id:"1-04",c:1,s:1,k:"err",lv:2,t:"오감동사 + 명사",q:"The night air [feels] [cool], and the moon [looks] [a coin] tonight.",a:3,x:"like a coin",h:["오감동사 뒤에 명사가 바로 오면 어떻게 되는지 생각해 봐.","'~처럼 보이다'에 명사를 쓰려면 전치사가 하나 필요해."],e:"오감동사 뒤에는 형용사가 오고, 명사를 쓰려면 like + 명사로 써. The moon looks like a coin. feels cool은 형용사 보어라 맞아."},
+{id:"1-05",c:1,s:2,k:"err",lv:2,t:"전치사를 쓰지 않는 타동사",q:"We [spent] hours [in] the meeting room [trying to reach] a decision, but we only [discussed about] the budget.",a:3,x:"discussed",h:["우리말로는 '~에 대해'가 붙지만 영어로는 바로 목적어를 받는 동사가 있어.","discuss, mention, marry, resemble, approach, enter, attend, reach"],e:"discuss는 완전타동사라 전치사 없이 목적어를 받아: discuss the plan. mention, marry, resemble, approach, enter, attend, reach도 마찬가지야. reach a conclusion도 전치사 없이 맞아."},
+{id:"1-06",c:1,s:2,k:"blank",lv:2,t:"explain은 4형식 불가",q:"He ___ his situation in detail.",o:["explained me","explained to me","explained me about","explained for me"],a:1,h:["explain이 간접목적어(사람)를 바로 받을 수 있는지 생각해 봐.","explain, say, suggest, describe, announce는 4형식이 안 돼."],e:"explain, say, suggest, describe, announce, introduce, propose는 4형식으로 못 써. 사람은 to + 사람으로 표시해: explain to me his situation / explain his situation to me."},
+{id:"1-07",c:1,s:2,k:"fill",lv:2,t:"become이 아니라 come to",q:"He came ___ (know) the fact after the trial.",a:["to know"],h:["'~하게 되다'를 동사 + 부정사로 표현할 때 쓰는 동사야.","become to R은 틀린 표현이고 come/get/learn to R을 써."],e:"'~하게 되다'는 come to R / get to R / learn to R. become은 to부정사를 목적어로 못 받아서 He became to know (X)가 돼."},
+{id:"1-08",c:1,s:2,k:"fix",lv:1,t:"타동사 + 부사 + 대명사",q:"There was a switch on the wall, so they [turned on it].",a:["turned it on"],h:["turn on은 '타동사 + 부사'로 된 구동사야.","목적어가 대명사일 때 위치가 정해져 있어."],e:"'타동사 + 부사' 구동사(turn on, put off, give up, pick up)는 목적어가 대명사면 반드시 동사와 부사 사이에 둬: turn it on. 명사면 turn on the light / turn the light on 둘 다 돼."},
+{id:"1-09",c:1,s:3,k:"err",lv:3,t:"take의 4형식",q:"It will [take] an hour [to you] [to get] there [by bus].",a:1,x:"(to 없이) It will take you an hour to get there.",h:["'사람이 ~하는 데 시간이 걸리다'의 어순을 떠올려 봐.","It takes + 사람 + 시간 + to R"],e:"It takes + 사람 + 시간 + to R 구문이야. 사람 앞에 to를 붙이지 않고, 사람은 시간보다 앞에 와: It will take you an hour to get there."},
+{id:"1-10",c:1,s:4,k:"blank",lv:2,t:"무생물 주어의 사역",q:"The earthquake ___ the floor shake for almost a minute.",o:["had","made","got","forced"],a:1,h:["뒤에 동사원형(shake)이 왔으니 원형부정사를 받는 사역동사가 필요해.","have는 사람에게 요청·지시하는 뜻이라 무생물 주어가 억지로 일으키는 결과엔 안 맞아."],e:"목적보어로 원형부정사를 받는 건 make, have, let. 지진이 바닥을 흔들리게 만든 강제·원인은 make를 써. have는 '시키다(부탁·지시)'라 The earthquake had the floor shake는 틀려. get, force는 to부정사를 받아."},
+{id:"1-11",c:1,s:4,k:"fill",lv:2,t:"가목적어 it",q:"Machines make ___ possible for us to do much work.",a:["it"],h:["make + 목적어 + possible에서 진짜 목적어가 어디 있는지 찾아봐.","진짜 목적어가 to부정사면 자리에 가목적어를 둬."],e:"5형식 make + 목적어 + 목적보어에서 목적어가 to부정사구(to do much work)면 가목적어 it을 두고 진목적어를 뒤로 보내: make it possible for us to do ~."},
+{id:"1-12",c:1,s:5,k:"err",lv:1,t:"lie와 lay",q:"She [laid] on the bed [all afternoon] because she [felt] [ill].",a:0,x:"lay",h:["'눕다'인지 '~을 놓다'인지부터 봐.","lie(눕다) - lay - lain / lay(놓다) - laid - laid"],e:"'눕다'는 자동사 lie - lay - lain이라 과거형은 lay. laid는 타동사 lay(~을 놓다)의 과거형이라 목적어가 있어야 해."},
+{id:"1-13",c:1,s:5,k:"blank",lv:1,t:"2형식 make",q:"She will ___ a good teacher; she is patient and kind.",o:["make","do","get","take"],a:0,h:["'좋은 선생님이 될 것이다'라는 뜻이야.","become의 뜻으로 쓰이는 동사를 골라."],e:"make가 2형식이면 '~이 되다(= become)'야: She will make a good teacher. 소질을 갖춰서 그렇게 될 거라는 뉘앙스야."},
+{id:"1-14",c:1,s:5,k:"fill",lv:2,t:"rise의 과거분사",q:"Prices have ___ (rise) sharply this year.",a:["risen"],h:["have 뒤니까 과거분사가 필요해.","rise - rose - ?"],e:"rise(오르다, 자동사) - rose - risen. 목적어가 있는 '올리다'는 raise - raised - raised야."},
+// 2강
+{id:"2-01",c:2,s:0,k:"err",lv:1,t:"시간 부사절의 미래",q:"I [will tell] him the news [when] he [will come] here [next week].",a:2,x:"comes",h:["when절이 무슨 역할(명사절/부사절)인지 봐.","시간·조건 부사절에서는 미래를 무엇으로 대신하지?"],e:"시간·조건 부사절(when, if, until, as soon as, before 등)에서는 미래 일도 현재시제로 써: when he comes here next week. 주절은 will tell 그대로."},
+{id:"2-02",c:2,s:0,k:"blank",lv:2,t:"명사절 if와 미래",q:"I don't know if he ___ tomorrow.",o:["comes","will come","came","has come"],a:1,h:["이 if절이 know의 목적어인지, 조건 부사절인지부터 판단해.","명사절이면 미래는 그대로 will을 써."],e:"if절이 know의 목적어(명사절, '~인지')라서 미래 일은 will로 써. '현재가 미래 대신'은 부사절에만 해당해."},
+{id:"2-03",c:2,s:1,k:"fix",lv:1,t:"since와 for",q:"He has been ill [since] two years.",a:["for"],h:["two years는 시점일까, 기간일까?","since는 시작 시점, for는 기간 길이."],e:"since 뒤에는 시작 시점(since 2023, since last week), for 뒤에는 기간 길이(for two years)가 와."},
+{id:"2-04",c:2,s:1,k:"err",lv:2,t:"현재완료와 과거 부사",q:"I [have seen] him [a moment ago] [at] the station, but he [didn't recognize] me.",a:0,x:"saw",h:["a moment ago 같은 부사가 어떤 시제랑 어울리는지 봐.","명백한 과거 시점 부사는 현재완료와 못 써."],e:"ago, yesterday, last ~, in 2019처럼 명백한 과거 시점 부사는 현재완료와 함께 못 써. 단순과거 saw."},
+{id:"2-05",c:2,s:1,k:"blank",lv:2,t:"when 의문문과 현재완료",q:"When ___ the book?",o:["have you read","did you read","had you read","have you been reading"],a:1,h:["의문사 when은 특정한 시점을 묻는 말이야.","특정 시점을 묻는 when은 현재완료와 같이 못 써."],e:"when은 특정 시점을 묻기 때문에 현재완료와 함께 못 써: When did you read the book? (When have you read ~ X)"},
+{id:"2-06",c:2,s:1,k:"fill",lv:2,t:"과거완료",q:"When I got to the station, the train ___ (leave) already.",a:["had left"],h:["기차가 떠난 것과 내가 도착한 것 중 무엇이 먼저야?","과거 기준점보다 더 앞선 일은 had p.p."],e:"내가 도착한 과거 시점(got)보다 기차가 떠난 게 먼저라 과거완료 had left. 대과거라고도 불러."},
+{id:"2-07",c:2,s:2,k:"fix",lv:1,t:"상태동사는 진행형 불가",q:"I [have been knowing] him for 10 years.",a:["have known"],h:["know가 동작인지 상태인지 생각해 봐.","상태동사는 진행형으로 못 써."],e:"know, have(소유), resemble, belong, like 같은 상태동사는 진행형이 안 돼. 계속은 현재완료 have known으로 표현해."},
+{id:"2-08",c:2,s:2,k:"blank",lv:1,t:"과거진행",q:"He ___ a shower when the phone rang.",o:["took","was taking","has taken","takes"],a:1,h:["전화가 울린 순간 그는 무엇을 하는 중이었어?","과거 어느 순간 진행 중이던 일은 was/were -ing."],e:"전화가 울린 과거 순간에 샤워를 하는 중이었으니 과거진행 was taking. took이면 전화가 울리자 샤워를 했다는 순서가 돼."},
+{id:"2-09",c:2,s:2,k:"err",lv:2,t:"감각동사의 진행형",q:"I [will add] some water [to] the soup [because] it [is tasting] too salty.",a:3,x:"tastes",h:["taste가 '맛이 나다'일 때는 상태야.","'맛을 보다(동작)'일 때만 진행형이 가능해."],e:"taste가 '~한 맛이 나다'(2형식 상태)일 때는 진행형이 안 돼: This soup tastes too salty. 'He is tasting the soup(맛을 보는 중)'처럼 동작일 때만 진행형이 가능해."},
+{id:"2-10",c:2,s:3,k:"err",lv:2,t:"lately와 현재완료",q:"Flight cancellations [increased] [lately] [because of] the storms that [have hit] the region.",a:0,x:"have increased",h:["lately(최근에)는 어떤 시제와 어울리는 부사야?","시점부사와 동사의 시제는 일치해야 해."],e:"lately, recently(최근까지), so far, up to now는 현재완료와 어울려: Flight cancellations have increased lately."},
+{id:"2-11",c:2,s:3,k:"fill",lv:2,t:"since + 과거 시점",q:"The population of this country ___ (double) since 1945.",a:["has doubled"],h:["since 1945는 과거부터 지금까지야.","과거부터 현재까지 이어진 결과는 현재완료."],e:"since + 과거 시점이 있으면 주절은 현재완료: has doubled since 1945."},
+// 3강
+{id:"3-01",c:3,s:6,k:"err",lv:1,t:"자동사는 수동태 불가",q:"Since I [started] the new [job], all my worries [have] completely [been disappeared].",a:3,x:"disappeared (have completely disappeared)",h:["disappear가 목적어를 가질 수 있는 동사인지 봐.","목적어가 없는 자동사는 수동태가 될 수 없어."],e:"disappear, happen, occur, appear, take place 같은 자동사는 목적어가 없어서 수동태가 안 돼: have disappeared."},
+{id:"3-02",c:3,s:3,k:"blank",lv:2,t:"look up to의 수동태",q:"The professor is looked ___ by all the students.",o:["up to","up","to up","at up"],a:0,h:["'존경하다'는 look up to야.","타동사구는 수동태에서도 한 덩어리로 움직여."],e:"look up to(존경하다)처럼 '자동사 + 부사 + 전치사' 타동사구는 수동태에서도 통째로 남아: be looked up to by ~."},
+{id:"3-03",c:3,s:3,k:"fix",lv:2,t:"do away with의 수동태",q:"The death penalty [has done away with] in many countries.",a:["has been done away with"],h:["사형제도가 폐지'된' 거니까 태를 확인해 봐.","현재완료 수동태 = have/has been p.p."],e:"사형제도는 폐지되는 대상이라 수동태. do away with(폐지하다) 전체를 p.p.로 바꿔 현재완료 수동: has been done away with."},
+{id:"3-04",c:3,s:4,k:"blank",lv:3,t:"for를 쓰는 4형식 동사의 수동태",q:"___ by him.",o:["A chair was made for me","I was made a chair","A chair was made me","I was made for a chair"],a:0,h:["make가 4형식일 때 3형식으로 바꾸면 어떤 전치사를 쓰지?","make, buy, cook, get처럼 for를 쓰는 동사는 사람을 주어로 한 수동태가 안 돼."],e:"make, buy, get, cook, find처럼 3형식 전환 때 for를 쓰는 동사는 직접목적어만 수동태 주어가 돼: A chair was made for me by him. I was made a chair (X)."},
+{id:"3-05",c:3,s:5,k:"fix",lv:1,t:"사역동사의 수동태",q:"We were made [work] very hard.",a:["to work"],h:["능동태 They made us work에서 원형부정사가 수동태로 오면?","사역·지각동사의 수동태에서 원형부정사는 to부정사로 바뀌어."],e:"사역동사 make, 지각동사 see/hear가 수동태가 되면 원형부정사가 to부정사로 바뀌어: We were made to work very hard."},
+{id:"3-06",c:3,s:5,k:"err",lv:2,t:"지각동사의 수동태",q:"He [was seen] [enter] the room [by] the security guard [at] midnight.",a:1,x:"to enter",h:["능동태라면 The guard saw him enter the room.","지각동사가 수동태가 되면 원형부정사가 어떻게 바뀌지?"],e:"지각동사 see의 목적보어 원형부정사는 수동태에서 to부정사가 돼: He was seen to enter the room. (진행 중이었다면 was seen entering도 가능)"},
+{id:"3-07",c:3,s:5,k:"blank",lv:3,t:"let은 수동태 불가",q:"I ___ to speak ahead of him at the meeting.",o:["was let","was allowed","was had","was made let"],a:1,h:["have와 let은 수동태로 못 써.","let의 뜻을 살리려면 다른 동사로 바꿔야 해."],e:"사역동사 have, let은 수동태가 안 돼. let은 be allowed to로, have는 be asked/told to로 바꿔: I was allowed to speak ahead of him."},
+{id:"3-08",c:3,s:6,k:"blank",lv:2,t:"resemble의 특징",q:"He ___ his father in every way.",o:["resembles","is resembled","resembles to","is resembling"],a:0,h:["resemble은 '닮다'라는 상태를 나타내는 타동사야.","상태동사: 수동태 X, 진행형 X, 전치사 X"],e:"resemble은 상태를 나타내는 타동사라 수동태(is resembled X), 진행형(is resembling X)이 안 되고 전치사 없이 목적어를 받아(resembles to X)."},
+{id:"3-09",c:3,s:2,k:"fill",lv:2,t:"that절 목적어의 수동태",q:"___ is said that he can buy everything.",a:["It"],h:["They say that ~를 수동태로 바꾸는 문제야.","긴 that절은 주어 자리에 두지 않고 가주어를 써."],e:"They say that ~의 수동태는 It is said that ~ 또는 He is said to ~. That he can buy everything is said (X)처럼 that절을 주어로 두지 않아."},
+{id:"3-10",c:3,s:6,k:"blank",lv:1,t:"by 이외의 전치사",q:"The top of the mountain is covered ___ snow all year round.",o:["with","by","in","of"],a:0,h:["be covered + 전치사 짝을 떠올려 봐.","be known to, be interested in, be satisfied with처럼 by 말고 다른 전치사를 쓰는 수동태가 있어."],e:"be covered with(~로 덮여 있다)는 by 대신 with를 써. be known to, be interested in, be made of/from, be satisfied with도 함께 외워 둬."},
+{id:"3-11",c:3,s:6,k:"blank",lv:3,t:"부정주어의 수동태",q:"The ugly dog ___ by anyone.",o:["was not loved","was loved","was loved not","was never not loved"],a:0,h:["능동태 No one loved the ugly dog를 수동태로 바꿔 봐.","by no one으로 끝내지 않고 not ~ by anyone으로 써."],e:"부정주어(no one, nobody) 문장의 수동태는 by no one이 아니라 not ~ by anyone: The ugly dog was not loved by anyone."},
+// 4강
+{id:"4-01",c:4,s:1,k:"err",lv:1,t:"조동사 두 개 연속 불가",q:"He [has worked] [hard] [for months], so next year he [will can] do the work for himself.",a:3,x:"will be able to",h:["서법조동사를 두 개 연달아 쓸 수 있는지 생각해 봐.","미래 + 능력은 will + be able to."],e:"서법조동사는 두 개 연속으로 못 써. will can (X) → will be able to, will must (X) → will have to, will may (X) → will be allowed to."},
+{id:"4-02",c:4,s:1,k:"fix",lv:2,t:"had better의 부정",q:"You [had not better] go there after dark.",a:["had better not"],h:["had better를 한 덩어리 조동사로 봐.","조동사 + not + 동사원형 순서야."],e:"had better는 한 덩어리 조동사라 부정어는 그 뒤에: had better not R. would rather도 would rather not R."},
+{id:"4-03",c:4,s:2,k:"blank",lv:2,t:"may well",q:"He ___ be proud of his son; he has just become a doctor.",o:["may well","may as well","might as well","can well"],a:0,h:["'자랑스러워하는 것도 당연하다'라는 뜻이야.","may well R = have good reason to R"],e:"may well R은 '~하는 것도 당연하다(= have good reason to R)'. may as well R은 '~하는 편이 낫다'라 의미가 달라."},
+{id:"4-04",c:4,s:2,k:"blank",lv:2,t:"may as well A as B",q:"You ___ throw your money away as lend it to him.",o:["may well","might as well","had better","would rather"],a:1,h:["뒤에 as lend가 있어서 'A하는 것은 B하는 것과 같다'는 비교 구문이야.","may/might as well A as B"],e:"may/might as well A as B는 'B하느니 차라리 A하는 게 낫다'. 그에게 돈을 빌려주느니 차라리 버리는 게 낫다는 뜻이야. would rather는 than과 짝지어."},
+{id:"4-05",c:4,s:2,k:"fill",lv:2,t:"cannot help -ing",q:"I cannot help ___ (laugh) at the sight.",a:["laughing"],h:["'~하지 않을 수 없다'를 cannot help로 쓰면 뒤에 어떤 형태가 와?","cannot but R과 형태를 헷갈리지 마."],e:"cannot help R-ing = cannot (choose) but R = have no choice but to R: '~하지 않을 수 없다'."},
+{id:"4-06",c:4,s:2,k:"fix",lv:2,t:"cannot ~ too",q:"You cannot be [very] careful when you drive at night.",a:["too"],h:["'아무리 조심해도 지나치지 않다'라는 뜻이 되게 고쳐 봐.","cannot ~ too ~"],e:"cannot ~ too ~ 는 '아무리 ~해도 지나치지 않다'. You cannot be too careful.(= You cannot be careful enough.)"},
+{id:"4-07",c:4,s:2,k:"err",lv:3,t:"부정적 추측 cannot",q:"The cause of his death [may be] heavy smoking, but the news [must not] be true because no doctor [has confirmed] it [yet].",a:1,x:"cannot",h:["'사실일 리가 없다'는 추측이야.","must not은 금지, '~일 리 없다'는 다른 조동사."],e:"'~일 리 없다'는 부정적 추측은 cannot: The news cannot be true. must not은 '~해서는 안 된다(금지)'야. 반대로 '~임에 틀림없다'는 must."},
+{id:"4-08",c:4,s:3,k:"blank",lv:2,t:"must have p.p.",q:"He ___ the exam; he looks so happy.",o:["must have passed","should have passed","cannot have passed","need not have passed"],a:0,h:["지금 기뻐 보이니 과거 일을 강하게 추측하는 거야.","과거에 대한 강한 확신은 must have p.p."],e:"must have p.p.는 '~했음에 틀림없다(과거 추측)'. should have p.p.는 '~했어야 했는데(후회)', cannot have p.p.는 '~했을 리 없다', need not have p.p.는 '~할 필요가 없었는데 했다'."},
+{id:"4-09",c:4,s:3,k:"fill",lv:2,t:"should have p.p.",q:"I failed the test. I ___ (study) harder. (그랬어야 했는데 안 했다)",a:["should have studied","ought to have studied"],h:["과거에 하지 않은 일에 대한 후회야.","should + have + p.p."],e:"should have p.p.(= ought to have p.p.)는 '~했어야 했는데(안 했다)'라는 과거에 대한 후회·유감이야."},
+{id:"4-10",c:4,s:2,k:"fix",lv:2,t:"조동사 need와 일반동사 need",q:"You [needed not] write a letter to him.",a:["didn't need to","did not need to"],h:["조동사 need는 과거형이 따로 없어.","과거 부정은 일반동사 need로 써."],e:"조동사 need는 과거형 needed로 못 써. 과거 부정은 일반동사로 didn't need to R. (편지를 썼는데 필요 없었다면 need not have written.)"},
+{id:"4-11",c:4,s:2,k:"blank",lv:1,t:"used to와 would",q:"There ___ be a big tree in front of my house.",o:["used to","would","was used to","is used to"],a:0,h:["나무가 '있었다'는 동작이야, 상태야?","과거의 상태는 used to만 가능해."],e:"used to R은 과거의 상태·습관 모두 가능하지만 would는 과거의 동작 습관에만 써. 과거 상태(There was a tree)는 used to."},
+// 5강
+{id:"5-01",c:5,s:1,k:"fix",lv:1,t:"It's time + 가정법",q:"It's time we [go] to bed.",a:["went","should go"],h:["'진작 ~했어야 할 시간이다'라는 뜻이야.","It's time + 주어 + 과거동사"],e:"It is (high/about) time + 주어 + 과거동사(가정법 과거)는 '이제 ~할 때다(늦었다)'. should + 동사원형도 가능해."},
+{id:"5-02",c:5,s:1,k:"blank",lv:2,t:"would rather + 가정법",q:"I'd rather you ___ anything about it.",o:["don't do","didn't do","won't do","not do"],a:1,h:["would rather 뒤에 주어 + 동사의 절이 오면 어떤 시제를 써?","현재의 바람이지만 가정법 과거."],e:"would rather (that) + 주어 + 과거동사는 '(지금) ~하면 좋겠다'는 가정법 과거야: I'd rather you didn't do anything."},
+{id:"5-03",c:5,s:1,k:"err",lv:2,t:"가정법 과거의 be동사",q:"I [would be able to] finish all my work [if] the day [was] thirty hours [long].",a:2,x:"were",h:["하루가 30시간인 것은 현재 사실의 반대야.","가정법 과거에서 be동사는 원칙적으로 하나로 통일해."],e:"가정법 과거의 be동사는 주어와 상관없이 were가 원칙이야(시험에선 was를 틀린 것으로 봐): if the day were thirty hours long."},
+{id:"5-04",c:5,s:2,k:"err",lv:1,t:"가정법 과거완료의 주절",q:"If I [had known] her number [yesterday], I [would call] her [to apologize].",a:2,x:"would have called",h:["if절이 had p.p.면 무엇의 반대야?","가정법 과거완료 주절 = would have p.p."],e:"과거 사실의 반대는 If + had p.p., 주어 + would/could/might have p.p.: I would have called her to apologize."},
+{id:"5-05",c:5,s:2,k:"blank",lv:2,t:"If it had not been for",q:"If it had not been for your help, I ___.",o:["would fail","would have failed","had failed","will fail"],a:1,h:["If it had not been for는 '~가 없었다면'이야.","과거의 반대니 주절은 would have p.p."],e:"If it had not been for ~(~가 없었다면)는 가정법 과거완료라 주절은 would have failed. (= But for / Without your help, I would have failed.)"},
+{id:"5-06",c:5,s:3,k:"blank",lv:3,t:"혼합 가정법",q:"If he had taken the doctor's advice then, he ___ healthy now.",o:["would be","would have been","will be","had been"],a:0,h:["if절의 then과 주절의 now를 봐.","과거에 ~했다면 (지금) ~할 텐데: 혼합 가정법"],e:"if절은 과거(then) 사실의 반대라 had p.p., 주절은 현재(now) 사실의 반대라 would + 동사원형. 시간 부사가 단서야."},
+{id:"5-07",c:5,s:4,k:"fill",lv:2,t:"제안 동사 + that + (should) R",q:"The doctor suggested that he ___ (stop) smoking.",a:["stop","should stop"],h:["suggest가 '제안하다'일 때 that절의 동사 형태야.","주장·요구·제안·명령 동사 + that + 주어 + (should) 동사원형"],e:"insist, demand, require, suggest, recommend, order가 당위(~해야 한다)를 나타내면 that절에 (should) + 동사원형을 써. 그래서 stops가 아니라 stop."},
+{id:"5-08",c:5,s:5,k:"blank",lv:2,t:"were to 가정법 미래",q:"If the sun ___ rise in the west, I would not change my mind.",o:["were to","should","will","would"],a:0,h:["해가 서쪽에서 뜰 가능성은 거의 0%야.","실현 가능성이 거의 없는 미래는 were to."],e:"가정법 미래에서 실현 가능성이 거의 없는 일은 If + 주어 + were to R, 가능성이 낮지만 있는 일은 If + 주어 + should R."},
+{id:"5-09",c:5,s:6,k:"fix",lv:2,t:"가정절 도치",q:"[If had I known] the truth, I would have told you.",a:["Had I known","If I had known"],h:["if를 생략하면 어순이 어떻게 바뀌지?","If I had known = Had I known"],e:"가정법에서 if를 생략하면 조동사(were, had, should)가 주어 앞으로 나가: Had I known the truth ~. if와 도치를 같이 쓸 수는 없어."},
+{id:"5-10",c:5,s:6,k:"fill",lv:3,t:"Were it not for",q:"___ it not for water, no living things could survive.",a:["Were"],h:["If it were not for water에서 if를 생략해 봐.","가정법 과거 도치"],e:"If it were not for(~가 없다면)에서 if를 생략하면 Were it not for. 과거완료는 Had it not been for."},
+{id:"5-11",c:5,s:7,k:"blank",lv:2,t:"전치사구형 가정법",q:"___ your advice, I would have made a big mistake.",o:["Without","Unless","Except","If not"],a:0,h:["빈칸 뒤에 명사구(your advice)만 있어.","명사 앞에 쓸 수 있는 '~가 없었다면'은?"],e:"without/but for + 명사가 if절을 대신해(= If it had not been for your advice). unless는 접속사라 뒤에 절이 와야 해."},
+// 6강
+{id:"6-01",c:6,s:0,k:"fix",lv:1,t:"병치되는 형용사 수식",q:"She is [real] beautiful and polite.",a:["really"],h:["beautiful and polite 전체를 꾸미는 말이야.","형용사를 꾸미는 건 부사."],e:"형용사(beautiful and polite)를 꾸미는 건 부사 really. real은 형용사라 형용사를 수식 못 해."},
+{id:"6-02",c:6,s:0,k:"err",lv:3,t:"공통관계의 전치사",q:"My first son has an [aptitude and] interest [in] science, and he [wants] to [become] a chemist.",a:0,x:"aptitude for and",h:["aptitude와 interest가 각각 어떤 전치사와 짝인지 봐.","aptitude for, interest in"],e:"공통관계로 묶을 때 각 명사가 요구하는 전치사가 다르면 둘 다 써야 해: an aptitude for and interest in science."},
+{id:"6-03",c:6,s:0,k:"err",lv:1,t:"접속사 중복",q:"[Although] she is a teacher, [but] she [doesn't like] [children].",a:1,x:"(but 삭제)",h:["두 절을 잇는 접속사가 몇 개야?","종속접속사와 등위접속사를 같이 쓸 수 없어."],e:"although(종속접속사)와 but(등위접속사)을 중복해서 쓸 수 없어. 하나만 남겨: Although she is a teacher, she doesn't like children."},
+{id:"6-04",c:6,s:1,k:"blank",lv:2,t:"neither + 도치",q:"Tom doesn't smoke, and ___.",o:["neither does he drink","neither he drinks","nor he drinks","so does he drink"],a:0,h:["'~도 역시 아니다'는 부정 동의야.","neither/nor 뒤는 조동사 + 주어로 도치돼."],e:"부정문 뒤의 '~도 아니다'는 and neither + 조동사 + 주어 (또는 , nor + 조동사 + 주어). neither, nor 뒤에서 도치가 안 되면 틀려."},
+{id:"6-05",c:6,s:2,k:"err",lv:2,t:"for는 문두 불가",q:"[For] it was wet, he [took] a taxi [instead of] [walking].",a:0,x:"Because (또는 He took a taxi, for it was wet.)",h:["for가 '왜냐하면'으로 쓰일 때 위치 제한이 있어.","준등위접속사 for는 앞 절 뒤에만 와."],e:"이유의 for는 등위접속사 성격이라 문장 맨 앞에 못 오고, 앞 절 뒤에 콤마와 함께 와: He took a taxi, for it was wet. 문두에서 이유를 말하려면 Because."},
+{id:"6-06",c:6,s:2,k:"fix",lv:1,t:"both A and B",q:"She has both experience [as well as] knowledge.",a:["and"],h:["both의 짝을 생각해 봐.","both A and B"],e:"both는 and와 짝이야: both experience and knowledge. A as well as B와 섞어 쓰면 안 돼."},
+{id:"6-07",c:6,s:2,k:"blank",lv:3,t:"세미콜론과 콤마",q:"My brother went to Seoul___ he continued to study.",o:["; because",", ","; ",": because"],a:2,h:["빈칸 앞뒤가 모두 완전한 절이야.","두 절을 접속사 없이 이으려면 콤마로는 안 돼."],e:"두 독립절은 접속사(and, because)나 세미콜론으로 이어. 콤마만 쓰면 틀리고(콤마 스플라이스), 세미콜론과 because를 같이 쓰는 것도 틀려."},
+{id:"6-08",c:6,s:3,k:"fill",lv:2,t:"Not only 도치",q:"Not only ___ she help him cook, but she also did the dishes.",a:["did"],h:["Not only가 문두에 오면 뒤가 어떻게 바뀌지?","일반동사 과거면 조동사 하나가 필요해."],e:"부정어 Not only가 문두로 나가면 도치돼: Not only did she help him cook ~. 일반동사라 did + 주어 + 동사원형."},
+{id:"6-09",c:6,s:3,k:"blank",lv:2,t:"neither A nor B의 수일치",q:"Neither you nor I ___ to go out.",o:["am","are","is","be"],a:0,h:["neither A nor B는 동사를 어디에 맞추지?","B에 일치"],e:"either A or B, neither A nor B, not only A but also B, not A but B는 동사를 B에 맞춰. B가 I라 am."},
+{id:"6-10",c:6,s:3,k:"err",lv:2,t:"not only A but also B의 수일치",q:"The news [was] [so] shocking [that] not only the students but also the teacher [were] surprised.",a:3,x:"was",h:["not only A but also B는 누구에 동사를 맞추지?","B = the teacher"],e:"not only A but also B는 B에 수를 맞춰. the teacher가 단수라 was. (B as well as A도 B에 맞추는데, 이때 B는 앞에 있는 명사야.)"},
+// 7강
+{id:"7-01",c:7,s:1,k:"fix",lv:2,t:"see to it that",q:"Please see [to that] the door is locked.",a:["to it that"],h:["전치사 to 바로 뒤에 that절이 올 수 있는지 생각해 봐.","전치사 뒤 that절은 안 되니까 가목적어를 둬."],e:"전치사 바로 뒤에는 that절이 못 와. 그래서 가목적어 it을 넣어: see to it that ~(~하도록 신경 쓰다). take it for granted that, depend on it that도 같은 원리야."},
+{id:"7-02",c:7,s:2,k:"fix",lv:2,t:"whether ~ or not",q:"I don't care whether it [doesn't rain] or not.",a:["rains"],h:["whether ~ or not 안에 부정어가 또 들어갔어.","or not이 이미 부정을 담고 있어."],e:"whether A or not은 그 자체로 '~인지 아닌지'라 절 안에 부정어를 또 쓰지 않아: whether it rains or not."},
+{id:"7-03",c:7,s:2,k:"err",lv:2,t:"if 명사절은 주어 자리 불가",q:"[If] the talks will help the peace of the region [is] still [uncertain] [to] many experts.",a:0,x:"Whether",h:["이 if절은 문장에서 무슨 역할을 해?","주어 자리에 오는 '~인지'는 whether만 가능해."],e:"'~인지'의 if 명사절은 타동사의 목적어로만 써. 주어, 보어, 전치사의 목적어 자리, to부정사 앞, or not 바로 앞에는 whether를 써."},
+{id:"7-04",c:7,s:2,k:"blank",lv:2,t:"whether + to부정사",q:"She wondered ___ to accept the offer or not.",o:["if","whether","that","what"],a:1,h:["빈칸 뒤에 to부정사가 바로 와.","if는 to부정사와 함께 못 써."],e:"whether to R(~할지 말지)은 되지만 if to R은 안 돼. what은 to accept의 목적어 자리가 비어 있어야 하는데 the offer가 있어서 안 돼."},
+{id:"7-05",c:7,s:2,k:"blank",lv:1,t:"전치사 뒤 whether",q:"It depends on ___ he will support us.",o:["if","whether","that","what"],a:1,h:["빈칸이 전치사 on의 목적어 자리야.","전치사 뒤에는 if도 that도 못 와."],e:"전치사의 목적어 자리에 오는 '~인지'는 whether만 가능해. that절도 전치사 뒤에는 못 와(in that, except that 제외)."},
+{id:"7-06",c:7,s:3,k:"err",lv:1,t:"간접의문문 어순",q:"I [have never asked] him, so I [don't know] [where] [is he] from.",a:3,x:"he is",h:["의문사절이 know의 목적어로 들어갔어.","간접의문문은 의문사 + 주어 + 동사."],e:"의문문이 명사절(간접의문문)로 들어가면 평서문 어순: Do you know where he is from?"},
+{id:"7-07",c:7,s:3,k:"blank",lv:3,t:"think + 의문사절",q:"___ he spent his holidays?",o:["Do you think where","Where do you think","Do you know where did","Where do you know"],a:1,h:["yes/no로 답하는 질문이 아니야.","think, believe, guess, suppose, imagine이면 의문사가 문두로 나가."],e:"생각·추측 동사(think, believe, guess, suppose, imagine)는 yes/no로 답하지 않으니 의문사가 문두로: Where do you think he spent his holidays? know는 yes/no로 답할 수 있어서 Do you know where he spent ~?"},
+{id:"7-08",c:7,s:3,k:"fix",lv:2,t:"how long + 어순",q:"No one knows how long [will they stay] healthy, but the results are encouraging.",a:["they will stay"],h:["how long 이하는 knows의 목적어야.","간접의문문은 주어 + 동사 순서."],e:"간접의문문은 의문사(how long) + 주어 + 동사 어순이야: how long they will stay healthy. 명사절이라 will도 그대로 써."},
+{id:"7-09",c:7,s:4,k:"fill",lv:2,t:"복합관계대명사 whoever",q:"I'll give the ticket to ___ wants it. (복합관계대명사)",a:["whoever"],h:["빈칸 뒤 wants의 주어가 없어.","to의 목적어지만 절 안에서의 역할로 격을 정해."],e:"전치사 to 뒤라도 복합관계사의 격은 절 안에서의 역할로 정해. wants의 주어니까 주격 whoever. 전치사 뒤라고 whomever를 쓰면 틀려."},
+{id:"7-10",c:7,s:4,k:"blank",lv:3,t:"whomever",q:"I'll give the ticket to ___ you recommend.",o:["whoever","whomever","who","whom"],a:1,h:["빈칸 뒤 절에서 빠진 성분이 뭐야?","recommend의 목적어가 없어."],e:"you recommend의 목적어가 빠져 있으니 목적격 whomever(~하는 누구든). 선행사가 없으니 who/whom은 안 돼."},
+{id:"7-11",c:7,s:5,k:"fill",lv:2,t:"화법 전환의 시제",q:"He said to me, “I am busy.” → He told me that he ___ busy.",a:["was"],h:["전달동사가 과거(told)야.","직접화법의 현재는 간접화법에서 과거로 바뀌어."],e:"전달동사가 과거면 피전달문의 시제를 한 단계 앞당겨(시제 일치): am → was. 인칭도 I → he로 바뀌어."},
+// 8강
+{id:"8-01",c:8,s:0,k:"err",lv:2,t:"계속적 용법과 that",q:"[Last night], fire [destroyed] the old house, [that] [had been abandoned] long ago.",a:2,x:"which",h:["관계사 앞에 콤마가 있어.","계속적 용법에 쓸 수 없는 관계대명사가 있어."],e:"콤마 뒤 계속적 용법에는 that을 못 써. 선행사가 사물이니 which."},
+{id:"8-02",c:8,s:1,k:"err",lv:1,t:"관계절 안 목적어 중복",q:"This is [the dictionary] [which] I bought [it] [yesterday].",a:2,x:"(it 삭제)",h:["which가 관계절 안에서 무슨 역할을 해?","관계대명사가 이미 목적어 역할을 해."],e:"목적격 관계대명사 which가 bought의 목적어 역할을 하니까 it을 또 쓰면 안 돼: the dictionary which I bought yesterday."},
+{id:"8-03",c:8,s:1,k:"blank",lv:3,t:"삽입절 뒤 관계대명사의 격",q:"She was a teacher ___ I thought loved us very much.",o:["who","whom","which","what"],a:0,h:["I thought를 괄호로 묶고 다시 봐.","loved의 주어가 빈칸이야."],e:"I thought는 삽입절이야. 빼고 보면 a teacher ___ loved us라 주격 who. 삽입절 뒤라고 whom을 고르는 게 대표 함정이야."},
+{id:"8-04",c:8,s:1,k:"blank",lv:2,t:"앞 절 전체를 받는 which",q:"He paid all his debt, ___ proves his honesty.",o:["which","that","what","who"],a:0,h:["무엇이 정직함을 증명하는지 생각해 봐: 빚을 다 갚은 것 전체.","앞 문장 전체를 선행사로 받는 계속적 용법."],e:"앞 절 전체를 선행사로 받는 계속적 용법은 , which. that은 계속적 용법에 못 쓰고, what은 선행사를 포함해서 안 돼."},
+{id:"8-05",c:8,s:1,k:"fix",lv:2,t:"what은 선행사를 포함",q:"[The thing what] made her angry was his indifference.",a:["What","The thing that","The thing which"],h:["what 안에 이미 the thing이 들어 있어.","선행사가 있으면 what은 못 써."],e:"what = the thing which(that)라 선행사와 같이 못 써. What made her angry ~ 또는 The thing that(which) made her angry ~."},
+{id:"8-06",c:8,s:1,k:"err",lv:1,t:"the way와 how",q:"This is [the way] [how] he [solved] the [quiz].",a:1,x:"(how 삭제) the way he solved / how he solved",h:["the way와 how를 같이 쓸 수 있는지 생각해 봐.","둘 중 하나만 써."],e:"the way와 관계부사 how는 함께 못 써. the way he solved, how he solved, the way in which he solved 중 하나로 써."},
+{id:"8-07",c:8,s:1,k:"blank",lv:1,t:"관계부사 where",q:"This is the house ___ I was born.",o:["which","where","in where","that"],a:1,h:["I was born은 완전한 절이야.","완전한 절 앞 장소 선행사 → 관계부사."],e:"I was born은 빠진 성분이 없는 완전한 절이라 관계대명사 which가 아니라 관계부사 where(= in which). in where처럼 전치사와 관계부사를 같이 쓸 수 없어."},
+{id:"8-08",c:8,s:2,k:"fill",lv:2,t:"전치사 + whom",q:"This is the scientist ___ whom I have discussed the problem.",a:["with"],h:["'~와 그 문제를 논의했다'를 생각해 봐.","I discussed the problem with the scientist."],e:"관계절을 되돌리면 I have discussed the problem with the scientist라 전치사 with가 whom 앞으로 와: with whom."},
+{id:"8-09",c:8,s:2,k:"blank",lv:3,t:"수량사 + of + whom",q:"He has three daughters, none of ___ are married yet.",o:["them","whom","who","that"],a:1,h:["콤마 뒤에 접속사 없이 절이 이어져.","두 절을 이어 주면서 전치사 of의 목적어가 될 말은?"],e:"none of them이면 접속사가 없어서 두 절을 이을 수 없어. 접속사 + 대명사 역할을 하는 관계대명사 목적격 whom을 써야 해: none of whom. (사물이면 all of which)"},
+{id:"8-10",c:8,s:3,k:"fix",lv:2,t:"생략된 관계사와 전치사",q:"We need the chairs we will [sit].",a:["sit on"],h:["관계사가 생략돼 있어: the chairs (which) we will sit ~","원래 문장은 We will sit on the chairs."],e:"목적격 관계대명사가 생략돼도 전치사는 남아야 해: the chairs (which) we will sit on. sit은 자동사라 on이 필요해."},
+{id:"8-11",c:8,s:3,k:"err",lv:3,t:"강조구문의 부사구",q:"It was [the house] [that] the accident [took place] [last year].",a:0,x:"in the house",h:["It was ~ that 강조구문이야. that 뒤 절이 완전한지 봐.","the accident took place in the house에서 무엇을 강조한 거지?"],e:"강조구문은 강조할 성분을 통째로 It was와 that 사이에 둬. the accident took place는 완전한 절이라 강조된 건 부사구 in the house야: It was in the house that ~."},
+{id:"8-12",c:8,s:4,k:"fill",lv:1,t:"복합관계대명사 whatever",q:"___ may happen, I'm ready to fight it off.",a:["Whatever"],h:["'무슨 일이 일어나더라도'라는 양보 부사절이야.","happen의 주어 역할도 해야 해."],e:"Whatever may happen = No matter what may happen(무슨 일이 일어나더라도). = Happen what may."},
+// 9강
+{id:"9-01",c:9,s:0,k:"err",lv:2,t:"during과 while",q:"He [lost] his parents [and] [was raised] by his aunt [during] he was a child.",a:3,x:"while (또는 when)",h:["빈칸 뒤에 주어 + 동사가 있어.","during은 전치사."],e:"during은 전치사라 명사(구)만 받아(during his childhood). 주어 + 동사가 오면 접속사 while/when."},
+{id:"9-02",c:9,s:0,k:"blank",lv:2,t:"부사절의 축약",q:"___ traveling in Europe, he was taken ill.",o:["While","During","Since he","Because of"],a:0,h:["While he was traveling에서 무엇이 생략됐을까?","접속사 + 분사 형태로 줄일 수 있어."],e:"While he was traveling에서 주어 + be동사를 생략하면 While traveling. during은 전치사라 동명사를 목적어로 쓰지 않고, Because of + -ing도 '~ 때문에'라 의미가 안 맞아."},
+{id:"9-03",c:9,s:2,k:"blank",lv:3,t:"명사 + as + S + V 양보",q:"___ as he was, he acted like a man.",o:["Child","A child","The child","Children"],a:0,h:["'그는 아이였지만'이라는 양보 구문이야.","명사 + as + S + V에서 명사는 관사 없이 써."],e:"Though he was a child를 '명사 + as + S + V'로 바꾸면 무관사 명사가 문두로: Child as he was, ~."},
+{id:"9-04",c:9,s:2,k:"fix",lv:2,t:"lest의 부정 중복",q:"We ran fast lest we [should not be] caught.",a:["should be","be"],h:["lest가 이미 '~하지 않도록'이야.","lest S (should) R"],e:"lest는 그 자체에 부정(~하지 않도록)이 들어 있어서 not을 또 쓰지 않아: lest we (should) be caught. for fear (that)도 마찬가지."},
+{id:"9-05",c:9,s:2,k:"err",lv:1,t:"so ~ that",q:"He [worked] [very] hard [that] he became [rich].",a:1,x:"so",h:["'너무 ~해서 …하다' 구문이야.","that과 짝이 되는 부사는 하나야."],e:"결과의 '너무 ~해서 …하다'는 so + 형/부 + that. very, too, as는 that과 짝이 안 돼."},
+{id:"9-06",c:9,s:2,k:"blank",lv:2,t:"unless",q:"You will miss the train ___ you hurry.",o:["unless","if","as long as","in case"],a:0,h:["'서두르지 않으면' 기차를 놓친다는 뜻이야.","if ~ not = ?"],e:"unless = if ~ not(~하지 않으면). 서두르지 않으면 기차를 놓친다는 뜻이라 unless. in case는 '~할 경우에 대비해서'."},
+{id:"9-07",c:9,s:3,k:"fill",lv:1,t:"until절의 시제",q:"I'll wait here until she ___ (come) back.",a:["comes"],h:["until절은 시간 부사절이야.","시간 부사절에서는 will을 못 써."],e:"시간 부사절에서는 미래 대신 현재시제: until she comes back."},
+{id:"9-08",c:9,s:3,k:"blank",lv:2,t:"It was not until ~ that",q:"It was not until he came home ___ he realized he had lost his wallet.",o:["that","when","then","which"],a:0,h:["not A until B를 강조구문으로 바꾼 형태야.","It was ~ that"],e:"He did not realize ~ until he came home을 강조하면 It was not until he came home that he realized ~(집에 오고 나서야 깨달았다)."},
+{id:"9-09",c:9,s:3,k:"fill",lv:2,t:"No sooner ~ than",q:"No sooner had he arrived ___ it began to rain.",a:["than"],h:["'~하자마자 …하다' 구문이야.","no sooner는 비교급 꼴이야."],e:"No sooner had S p.p. than S 과거동사 = '~하자마자 …했다'. sooner가 비교급이라 than과 짝이야."},
+{id:"9-10",c:9,s:3,k:"err",lv:3,t:"Hardly ~ when",q:"Hardly [had] she [closed] the door [than] the phone [rang].",a:2,x:"when (또는 before)",h:["Hardly와 짝이 되는 접속사를 떠올려 봐.","than은 no sooner의 짝이야."],e:"Hardly/Scarcely had S p.p. when/before S 과거동사(~하자마자 …했다). than은 No sooner와만 짝이야."},
+{id:"9-11",c:9,s:4,k:"blank",lv:2,t:"as와 like",q:"In 1939, ___ in 1914, everybody seemed to want war.",o:["as","like","such as","so"],a:0,h:["빈칸 뒤에 명사가 아니라 전치사구(in 1914)가 와.","like는 전치사라 뒤에 명사가 와야 해."],e:"뒤에 절이나 전치사구가 오면 접속사 as(~처럼): as in 1914. like는 전치사라 명사(구) 앞에만 써(like his father)."},
+// 10강
+{id:"10-01",c:10,s:0,k:"fix",lv:1,t:"전치사 to",q:"I object to [attend] the meeting.",a:["attending"],h:["object to의 to가 부정사 to인지 전치사 to인지 봐.","전치사 뒤에는 동명사."],e:"object to, look forward to, be used to, be devoted to, when it comes to의 to는 전치사라 뒤에 동명사: object to attending."},
+{id:"10-02",c:10,s:0,k:"err",lv:3,t:"병치되는 부정사",q:"He continued [to search], [to explore], and [expand] the theme [without rest].",a:2,x:"to expand",h:["to가 앞에 몇 번 쓰였는지 세어 봐.","to를 첫 번째에만 쓰든지, 모두에 쓰든지 통일해."],e:"여러 부정사를 병치할 때는 to를 첫 번째에만 쓰거나(to search, explore, and expand) 모두에 써(to search, to explore, and to expand). 섞으면 틀려."},
+{id:"10-03",c:10,s:1,k:"blank",lv:2,t:"의문사 + to부정사",q:"Do you understand what ___?",o:["to do","to do it","you should do it","doing"],a:0,h:["what이 do의 목적어 역할을 해.","목적어가 또 있으면 안 돼."],e:"what to do = what you should do. what이 이미 do의 목적어라 it을 또 쓰면 안 돼."},
+{id:"10-04",c:10,s:1,k:"fill",lv:2,t:"형용사적 용법과 전치사",q:"This skirt has no pocket to put things ___.",a:["in"],h:["put things in a pocket을 떠올려 봐.","명사를 꾸미는 to부정사 끝에 전치사가 남아."],e:"to부정사가 앞 명사를 꾸밀 때, 원래 put things in a pocket이라 전치사 in이 남아: a pocket to put things in. (a house to live in, a chair to sit on)"},
+{id:"10-05",c:10,s:2,k:"err",lv:2,t:"부정사의 의미상 주어 일치",q:"[To inspect] the car, [a special light] [is needed] [in] the garage.",a:1,x:"you need a special light (주어를 사람으로)",h:["차를 점검하는 주체가 누구야?","문두의 to부정사 주어는 주절 주어와 같아야 해."],e:"문두 to부정사의 의미상 주어는 주절 주어와 같아야 해. 불빛이 차를 점검하는 게 아니니 To inspect the car, you need a special light."},
+{id:"10-06",c:10,s:2,k:"blank",lv:3,t:"난이형용사 구문과 전치사",q:"This river is dangerous ___.",o:["to swim","to swim in","to swim in it","for swimming it"],a:1,h:["swim in the river를 생각해 봐.","주어가 to부정사의 목적어 역할을 하니까 목적어를 또 쓰지 않아."],e:"난이형용사(easy, difficult, dangerous, hard) 구문에서 주어는 to부정사(또는 그 전치사)의 목적어야. swim in the river라서 to swim in. it을 또 쓰면 중복이야."},
+{id:"10-07",c:10,s:2,k:"fix",lv:2,t:"난이형용사 구문의 목적어",q:"The bumper is difficult for me [to remove it].",a:["to remove"],h:["주어 The bumper가 무엇의 목적어였는지 생각해 봐.","It is difficult for me to remove the bumper."],e:"It is difficult for me to remove the bumper에서 목적어가 주어로 올라간 구문이라 to remove 뒤에 it을 다시 쓰지 않아."},
+{id:"10-08",c:10,s:2,k:"blank",lv:2,t:"의미상 주어 of",q:"It was very kind ___ you to help me.",o:["of","for","to","with"],a:0,h:["kind가 사람의 성격을 평가하는 형용사야.","성격 형용사 + of + 목적격"],e:"kind, nice, wise, foolish, careless처럼 사람의 성격을 평가하는 형용사 뒤에는 의미상 주어를 of로 써. 그 밖에는 for."},
+{id:"10-09",c:10,s:2,k:"fill",lv:3,t:"완료부정사",q:"She seems ___ (be) rich when she was young.",a:["to have been"],h:["seems는 현재, when she was young은 과거야.","본동사보다 앞선 시점이면 완료부정사."],e:"본동사(seems, 현재)보다 앞선 시점(과거)을 나타내면 완료부정사 to have p.p.: She seems to have been rich. = It seems that she was rich."},
+{id:"10-10",c:10,s:2,k:"fix",lv:2,t:"부정사의 부정",q:"She seems [to not have noticed] me at a glance.",a:["not to have noticed"],h:["부정어 not의 위치를 봐.","부정사의 부정은 to 앞에."],e:"부정사를 부정할 때는 not/never를 to 바로 앞에 둬: not to have noticed."},
+{id:"10-11",c:10,s:3,k:"blank",lv:2,t:"대부정사",q:"You can go if you want ___.",o:["to","it","to it","so"],a:0,h:["want to go에서 go가 반복돼서 생략된 거야.","동사원형을 빼고 to만 남기는 걸 뭐라고 하지?"],e:"앞에 나온 동사의 반복을 피해 to만 남기는 걸 대부정사라 해: if you want to (go)."},
+// 11강
+{id:"11-01",c:11,s:0,k:"fix",lv:1,t:"동명사와 명사",q:"We can examine something by [observation] it.",a:["observing"],h:["뒤에 목적어 it이 있어.","목적어를 받을 수 있는 건 명사가 아니라 동명사."],e:"전치사 by 뒤에 명사가 와도 되지만, 목적어(it)를 받아야 하니까 동사 성격이 있는 동명사 observing."},
+{id:"11-02",c:11,s:0,k:"blank",lv:2,t:"명사가 있으면 명사",q:"She made a lot of money from her ___.",o:["investment","investing","invest","invested"],a:0,h:["빈칸 뒤에 목적어가 없어.","소유격 뒤 목적어 없는 자리에 일반 명사가 있으면 명사가 우선이야."],e:"her 뒤에 목적어 없이 '투자'라는 뜻만 필요하면 명사 investment를 써. 동명사는 목적어나 부사가 필요할 때 써."},
+{id:"11-03",c:11,s:1,k:"fill",lv:1,t:"전치사의 목적어",q:"I am fond of ___ (collect) stamps.",a:["collecting"],h:["of는 전치사야.","전치사 뒤 동사는 -ing."],e:"전치사 of의 목적어 자리라 동명사 collecting."},
+{id:"11-04",c:11,s:1,k:"err",lv:2,t:"목적은 to R",q:"On my way [home], I [popped into] the supermarket [to see] a friend and [for buying] some apples.",a:3,x:"to buy",h:["사과를 '사려고' 들른 거야.","개인의 목적은 for + 명사나 to R로 표현해."],e:"사람의 행위 목적은 to R(또는 for + 명사)로 써: to buy some apples. for + -ing는 물건의 용도(a knife for cutting bread)에 써."},
+{id:"11-05",c:11,s:1,k:"blank",lv:1,t:"look forward to",q:"I look forward to ___ from you.",o:["hear","hearing","be heard","have heard"],a:1,h:["look forward to의 to는 전치사야.","전치사 뒤 → 동명사"],e:"look forward to + -ing(~을 고대하다). to가 전치사라 동명사 hearing."},
+{id:"11-06",c:11,s:1,k:"fill",lv:2,t:"It is no use -ing",q:"It is no use ___ (cry) over spilt milk.",a:["crying"],h:["'~해 봐야 소용없다' 관용 표현이야.","It is no use + 동명사"],e:"It is no use -ing = It is of no use to R = '~해 봐야 소용없다'."},
+{id:"11-07",c:11,s:2,k:"blank",lv:3,t:"동명사의 의미상 주어",q:"I insisted on ___ attending the meeting.",o:["her","she","hers","herself"],a:0,h:["attending의 행위자는 누구야?","동명사의 의미상 주어는 소유격이나 목적격."],e:"동명사의 의미상 주어는 소유격(her)이나 목적격(her)으로 동명사 앞에 써. 주격 she는 안 돼."},
+{id:"11-08",c:11,s:2,k:"err",lv:2,t:"need -ing",q:"Your car [needs] [being washed] [before] the [trip].",a:1,x:"washing (또는 to be washed)",h:["need, want 뒤 동명사는 능동형이지만 수동의 뜻이야.","need -ing = need to be p.p."],e:"need/want/deserve + 능동 동명사는 수동의 의미야: needs washing = needs to be washed. being washed처럼 수동 동명사로 쓰지 않아."},
+{id:"11-09",c:11,s:2,k:"fix",lv:1,t:"be worth -ing",q:"This book is worth [reading it] carefully.",a:["reading"],h:["주어 This book이 reading의 목적어 역할을 해.","목적어를 또 쓰면 중복이야."],e:"be worth -ing에서 주어가 동명사의 의미상 목적어라 it을 쓰지 않아: This book is worth reading. 수동형 being read도 안 돼."},
+{id:"11-10",c:11,s:2,k:"fix",lv:2,t:"동명사의 부정",q:"We can blame him for [having not told] us the truth.",a:["not having told"],h:["부정어 not의 위치를 봐.","준동사의 부정은 준동사 바로 앞에."],e:"동명사를 부정할 때 not/never는 동명사 바로 앞에 둬: not having told."},
+// 12강
+{id:"12-01",c:12,s:0,k:"blank",lv:1,t:"감정 분사",q:"The lecture was so ___ that many students fell asleep.",o:["boring","bored","bore","to bore"],a:0,h:["강의가 지루함을 '주는' 쪽이야, '느끼는' 쪽이야?","감정을 일으키면 -ing, 느끼면 p.p."],e:"감정 유발 동사의 분사: 감정을 일으키는 원인이면 현재분사(boring), 감정을 느끼는 사람이면 과거분사(bored). 강의가 지루하게 만드니까 boring."},
+{id:"12-02",c:12,s:1,k:"fix",lv:2,t:"have + 목적어 + 원형",q:"He had his son [died] in the air crash.",a:["die"],h:["die는 자동사라 수동 p.p.로 쓸 수 없어.","have + 목적어 + 동사원형 = (불행한 일을) 당하다"],e:"have + 목적어 + 원형/p.p.에서 목적어와 동사가 능동이면 원형, 수동이면 p.p. die는 자동사라 수동이 안 되니 have his son die(아들을 잃다)."},
+{id:"12-03",c:12,s:0,k:"blank",lv:2,t:"자동사의 과거분사",q:"Look at the ___ leaves on the ground.",o:["fallen","falling","fell","fall"],a:0,h:["잎이 이미 땅에 떨어져 있어.","자동사의 p.p.는 '완료'의 뜻이야."],e:"자동사의 과거분사는 수동이 아니라 완료(이미 ~한)를 나타내: fallen leaves(떨어진 잎). falling leaves는 지금 떨어지고 있는 잎이야."},
+{id:"12-04",c:12,s:1,k:"err",lv:2,t:"분사구문의 주어",q:"[Entering] the room, [a strange sight] [caught] my [eye].",a:1,x:"I saw a strange sight (주어를 사람으로)",h:["방에 들어간 사람이 누구야?","분사구문의 생략된 주어는 주절 주어와 같아야 해."],e:"분사구문의 의미상 주어는 주절 주어와 같아야 해. 광경이 방에 들어간 게 아니니 Entering the room, I saw a strange sight."},
+{id:"12-05",c:12,s:1,k:"blank",lv:2,t:"수동 분사구문",q:"___ in French, the book can't be read easily.",o:["Writing","Written","Having written","To write"],a:1,h:["생략된 주어는 the book이야.","책은 쓰는 게 아니라 쓰여지는 거야."],e:"분사구문의 주어 the book은 '쓰여진' 대상이라 (Being) Written. 생략된 주어와 분사의 관계가 수동이면 p.p."},
+{id:"12-06",c:12,s:1,k:"fix",lv:2,t:"접속사 + 절",q:"When her husband [dying], she received $100,000 in insurance.",a:["died"],h:["when 뒤에 주어 her husband가 따로 있어.","주어가 있는 when절이면 동사가 있어야 해."],e:"접속사 when 뒤에 주어(her husband)가 있으니 완전한 절이 와야 해: When her husband died. 분사로 줄이려면 주어가 주절과 같아야 해."},
+{id:"12-07",c:12,s:1,k:"fill",lv:3,t:"독립분사구문",q:"___ (be) Sunday, the bank was closed.",a:["It being"],h:["Because it was Sunday를 분사구문으로 바꿔 봐.","주절 주어(the bank)와 다르니 주어를 남겨."],e:"분사구문의 주어가 주절 주어와 다르면 주어를 남겨(독립분사구문). 비인칭 it도 생략 못 해: It being Sunday, the bank was closed."},
+{id:"12-08",c:12,s:2,k:"fix",lv:2,t:"분사구문의 부정",q:"[Having not been] deceived by him before, she trusted his words.",a:["Not having been"],h:["not의 위치를 봐.","분사의 부정어는 분사 앞."],e:"분사구문을 부정할 때 not/never는 분사 맨 앞에 둬: Not having been deceived ~."},
+{id:"12-09",c:12,s:2,k:"blank",lv:3,t:"완료 수동 분사구문",q:"___ in poverty, he knows the value of money.",o:["Having been raised","Having raised","Raising","To raise"],a:0,h:["그가 가난 속에서 길러진 거야.","주절보다 앞선 일 + 수동"],e:"가난 속에서 자란(길러진) 건 주절(knows)보다 앞선 일이고 수동이라 Having been raised (줄여서 Raised). Having raised, Raising은 능동이라 '그가 누군가를 길렀다'가 돼."},
+{id:"12-10",c:12,s:1,k:"fill",lv:2,t:"with + 목적어 + 분사",q:"She sat there with her eyes ___ (close).",a:["closed"],h:["눈은 감는 거야, 감기는 거야?","with + 목적어 + 분사: 관계가 수동이면 p.p."],e:"with + 목적어 + 분사에서 목적어와 분사가 수동 관계면 p.p.: with her eyes closed(눈을 감은 채). with her arms folded, with the engine running도 같은 구조야."},
+// 13강
+{id:"13-01",c:13,s:0,k:"fix",lv:2,t:"and로 병치된 명사 자리",q:"Artificial rubies and sapphires have the same [hard] and composition as the real stones.",a:["hardness"],h:["the same 뒤, and composition과 나란히 놓인 자리야.","관사 + 형용사 뒤에는 명사."],e:"the same 뒤에 composition(명사)과 and로 병치되는 자리라 명사가 와야 해: the same hardness and composition."},
+{id:"13-02",c:13,s:1,k:"err",lv:2,t:"the police는 복수",q:"The man [was] [questioned] yesterday, and the police [wants] [to interview] him again.",a:2,x:"want",h:["the police가 단수 취급인지 복수 취급인지 떠올려 봐.","the police, the clergy, cattle, people"],e:"the police, the clergy, cattle, people은 항상 복수 취급하는 집합명사야: The police want ~."},
+{id:"13-03",c:13,s:1,k:"blank",lv:2,t:"집합명사의 단수 취급",q:"The committee ___ to its view that this is a matter for individuals to decide.",o:["adheres","adhere","adhering","are adhering"],a:0,h:["뒤에 its가 있어.","하나의 집합체로 보면 단수, 구성원 개개인으로 보면 복수."],e:"집합명사 committee, family, team은 하나의 단위로 보면 단수, 구성원을 보면 복수야. its view라고 했으니 단수 adheres."},
+{id:"13-04",c:13,s:3,k:"fix",lv:1,t:"advice는 불가산",q:"Let me give you [an advice].",a:["some advice","a piece of advice","advice"],h:["advice는 셀 수 있는 명사일까?","불가산명사는 a/an도, -s도 못 붙여."],e:"advice, information, furniture, equipment, baggage, news는 불가산명사라 a/an이나 복수형이 안 돼. 셀 때는 a piece of advice."},
+{id:"13-05",c:13,s:3,k:"blank",lv:1,t:"furniture 세기",q:"There are many ___ in the room.",o:["pieces of furniture","furnitures","furniture","piece of furnitures"],a:0,h:["There are many 뒤니까 복수 개념이 필요해.","furniture는 불가산이라 단위 명사로 세."],e:"furniture는 불가산명사라 furnitures (X). 여러 개는 many pieces of furniture."},
+{id:"13-06",c:13,s:1,k:"fill",lv:2,t:"of + 추상명사",q:"This information is of ___ (important).",a:["importance","great importance"],h:["of 뒤에는 명사가 와.","of + 추상명사 = 형용사"],e:"of + 추상명사 = 형용사: of importance = important, of use = useful, of value = valuable. of an importance처럼 관사를 붙이지 않아."},
+{id:"13-07",c:13,s:4,k:"err",lv:2,t:"학문명은 단수",q:"Economics [are] his [favorite] subject [of] [study].",a:0,x:"is",h:["-ics로 끝나는 학문 이름은 몇 개로 취급할까?","형태는 복수, 취급은 단수"],e:"economics, physics, mathematics, statistics 같은 학문명은 단수 취급: Economics is. (statistics가 '통계 수치'면 복수 취급)"},
+{id:"13-08",c:13,s:4,k:"fix",lv:2,t:"수사 + 명사 복합 형용사",q:"It is a [three-hours] journey from here to the temple.",a:["three-hour"],h:["하이픈으로 묶여 journey를 꾸미는 형용사야.","형용사로 쓰인 '숫자-명사'에서 명사는 단수."],e:"하이픈으로 연결된 '수사 + 명사'가 형용사로 쓰이면 명사는 단수: a three-hour journey, a ten-year-old girl, a ten-foot-high wall."},
+{id:"13-09",c:13,s:4,k:"blank",lv:2,t:"명사 + 명사 복합명사",q:"I bought these shoes at a ___ shop downtown.",o:["shoe","shoes","shoe's","shoes'"],a:0,h:["shop 앞에서 명사가 형용사처럼 쓰였어.","앞 명사는 원칙적으로 단수."],e:"명사가 다른 명사를 꾸미는 복합명사에서 앞 명사는 단수가 원칙: a shoe shop, a book store, a ten-dollar bill."},
+{id:"13-10",c:13,s:4,k:"blank",lv:1,t:"형용사 + 명사",q:"Please send me the ___ information by Friday.",o:["relevant","relevance","relevancy","relevantly"],a:0,h:["information을 꾸미는 자리야.","'관련된 정보'"],e:"명사 information을 꾸미는 자리라 형용사 relevant. 비슷한 실수: additional charges, prospective customers, confidential documents, limited warranty."},
+{id:"13-11",c:13,s:5,k:"blank",lv:2,t:"분화명사 manners",q:"Mind your ___ at the table.",o:["manners","manner","mannering","mannered"],a:0,h:["'식사 예절'을 말하는 거야.","단수와 복수의 뜻이 다른 명사야."],e:"분화명사는 단수·복수의 뜻이 달라: manner(방법), manners(예절), custom(관습) / customs(세관), arm(팔) / arms(무기)."},
+{id:"13-12",c:13,s:7,k:"fix",lv:3,t:"이중소유격",q:"He is [a his old friend].",a:["an old friend of his"],h:["a와 his 같은 한정사를 같이 쓸 수 있는지 봐.","관사 + 명사 + of + 소유대명사"],e:"a, this, some, another 같은 한정사와 소유격은 나란히 못 써. 이중소유격으로: an old friend of his, this duty of mine, a friend of Tom's."},
+{id:"13-13",c:13,s:7,k:"fill",lv:2,t:"독립소유격",q:"I have an appointment at the ___ at noon. (dentist)",a:["dentist's"],h:["'치과에서'는 치과의사의 진료소라는 뜻이야.","소유격 뒤 office가 생략돼."],e:"소유격 뒤 장소 명사(office, shop, house)가 생략되는 독립소유격: at the dentist's, at the barber's, at my uncle's."}
+];
+
+const KIND={err:["틀린 곳 찾기","obj"],blank:["빈칸 고르기","obj"],fix:["고쳐 쓰기","sub"],fill:["빈칸 쓰기","sub"]};
+const LV=["","기본","보통","도전"];
+const INS={err:"다음 문장에서 어법상 틀린 부분을 고르시오.",blank:"빈칸에 들어갈 가장 적절한 것을 고르시오.",fix:"밑줄 친 부분을 어법에 맞게 고쳐 쓰시오.",fill:"빈칸에 알맞은 말을 쓰시오. 괄호 안 단어는 알맞은 형태로 바꾸시오."};
+const CIR="①②③④";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const OBJ=k=>k==="err"||k==="blank";
+const byId={};P.forEach(p=>byId[p.id]=p);
+const chP=c=>P.filter(p=>p.c===c);
+const bookOf=c=>BOOKS.find(b=>b.ch.includes(c));
+const segs=p=>[...p.q.matchAll(/\[([^\]]+)\]/g)].map(m=>m[1]);
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+function perm(id){let h=7;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;const a=[0,1,2,3];for(let i=3;i>0;i--){h=(Math.imul(h,1103515245)+12345)>>>0;const j=h%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+const ord=p=>p.k==="blank"?perm(p.id):[0,1,2,3];
+const norm=s=>String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;]+$/,"").replace(/\s+/g," ").trim();
+const check=(p,g)=>OBJ(p.k)?g===p.a:p.a.some(a=>norm(a)===norm(g));
+const ansText=p=>p.k==="err"?`(${"ABCD"[p.a]}) ${segs(p)[p.a]} → ${p.x}`:p.k==="blank"?p.o[p.a]:p.a.join(" / ");
+const secName=(c,i)=>{const s=CH[c].s[i];return (s[0]?s[0]+". ":"")+s[1]};
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+let S={r:{},u:0};
+const LK="pyeonip-grammar-v2";
+try{const v=JSON.parse(localStorage.getItem(LK)||"null");if(v&&v.r)S=v}catch(e){}
+const ui={retry:{},hints:{},open:{},sel:{},draft:{},fk:"all",fs:"all",scope:"all",exN:10,exT:0,reset:0,sec:null};
+let EX=null,tick=0;
+const st=id=>S.r[id]&&S.r[id].s;
+const solved=list=>list.filter(p=>st(p.id)).length;
+const countK=list=>{const k={err:0,blank:0,fix:0,fill:0};list.forEach(p=>k[p.k]++);return k};
+const kline=k=>Object.keys(KIND).map(x=>`<span>${KIND[x][0]} <b>${k[x]}</b></span>`).join("");
+
+/* 저장 */
+let ref=null,writing=false,again=false,wt=0;
+function setSave(t){const el=$("#save");if(el)el.textContent=t}
+function save(){S.u=Date.now();try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}if(ref){clearTimeout(wt);wt=setTimeout(push,600)}}
+async function push(){if(!ref)return;if(writing){again=true;return}writing=true;try{await ref.set(JSON.parse(JSON.stringify(S)));setSave("기록이 계정에 저장돼")}catch(e){setSave("기록은 이 브라우저에만 저장돼")}writing=false;if(again){again=false;push()}}
+async function cloud(n){const c=window.claude;if(!c||!c.use){if(n<20)setTimeout(()=>cloud(n+1),500);else setSave("기록은 이 브라우저에만 저장돼");return}
+ try{const[db,user]=await Promise.all([c.use("db"),c.use("user")]);const uid=user&&await user.id();if(!db||!uid){setSave("기록은 이 브라우저에만 저장돼");return}
+  const r=db.doc("data/users/"+uid+"/progress");
+  const snap=await Promise.race([r.get(),new Promise((_,j)=>setTimeout(()=>j(new Error("timeout")),10000))]);
+  ref=r;const d=snap.exists?snap.data():null;
+  if(d&&d.r&&(d.u||0)>(S.u||0)){S={r:JSON.parse(JSON.stringify(d.r)),u:d.u};try{localStorage.setItem(LK,JSON.stringify(S))}catch(e){}keep()}
+  else if(S.u)push();
+  setSave("기록이 계정에 저장돼")}catch(e){setSave("기록은 이 브라우저에만 저장돼")}}
+
+/* 화면 */
+function vHome(){
+ const cards=BOOKS.map(b=>{const ps=P.filter(p=>b.ch.includes(p.c)),n=solved(ps);const r=b.ch.length>1?`${b.ch[0]}~${b.ch[b.ch.length-1]}강`:`${b.ch[0]}강`;
+  return `<article class="card"><p class="ser">${b.name} · ${r}</p><h2>${b.sub}</h2><p class="desc">${b.desc}</p><p class="stat">문제 ${ps.length}개 · 객관식 ${ps.filter(p=>OBJ(p.k)).length} · 주관식 ${ps.filter(p=>!OBJ(p.k)).length}</p><div class="prog"><span>푼 문제 ${n} / ${ps.length}</span><i><b style="width:${pct(n,ps.length)}%"></b></i></div><div class="btns"><a class="btn" href="#${b.id}">차례 보기</a><a class="btn alt" href="#exam" data-scope="${b.id}">모의고사</a></div></article>`}).join("");
+ const nx=P.find(p=>!st(p.id)),wr=P.filter(p=>st(p.id)==="no").length,done=solved(P);
+ return `<h1>편입 영어 문법</h1><p class="lead">강의자료의 강과 절을 따라 푸는 문법 문제야. 답을 내면 바로 채점하고, 힌트 두 개와 해설을 볼 수 있어.</p><div class="cards">${cards}</div>
+ <div class="band"><div><h2>${done?`${done}문제 풀었어 · 틀린 문제 ${wr}개`:"아직 푼 문제가 없어"}</h2><p>${nx?`다음 안 푼 문제: ${nx.c}강 ${esc(nx.t)}`:"모든 문제를 한 번씩 풀었어."}</p></div><div class="btns">${nx?`<a class="btn" href="#p${nx.id}">이어서 풀기</a>`:""}<a class="ghost" href="#me">내 기록</a></div></div>
+ <p class="note">문제는 강의자료의 규칙과 예문을 바탕으로 새로 만든 연습 문제야. 쪽수는 강의자료 기준이야.</p>`}
+
+function vBook(b){
+ const ps=P.filter(p=>b.ch.includes(p.c)),n=solved(ps);
+ const toc=b.ch.map(c=>{const C=CH[c],cp=chP(c);
+  return `<div class="tocch"><a class="toch" href="#c${c}"><span class="num">${c}</span><span><b>${C.t}</b><small>${C.pg}쪽 · ${cp.length}문제 · 푼 문제 ${solved(cp)}</small></span></a><ul>${C.s.map((s,i)=>{const k=cp.filter(p=>p.s===i).length;return `<li><a href="#c${c}" data-sec="s${c}-${i}"><span class="sl">${s[0]||"·"}</span><span class="st">${s[1]}</span><span class="sn">${k?k+"문제":"문제 없음"}</span></a></li>`}).join("")}</ul></div>`}).join("");
+ return `<a class="back" href="#home">← 편입 영어 문법</a><p class="ser">${b.name}</p><h1>${b.sub}</h1><p class="lead">${b.desc}</p><p class="kline"><span>문제 <b>${ps.length}</b>개</span>${kline(countK(ps))}</p>
+ <div class="mode"><article class="card"><h2>연습</h2><p class="desc">차례에서 강과 절을 골라 풀고 바로 채점해. 힌트와 해설을 볼 수 있고, 푼 기록이 남아.</p><div class="btns"><button class="btn" data-goto="toc">차례 보기</button></div></article><article class="card"><h2>모의고사</h2><p class="desc">이 범위에서 무작위로 뽑은 문제를 제한 시간 안에, 또는 시간 제한 없이 풀어. 다 풀고 한꺼번에 채점해.</p><div class="btns"><a class="btn alt" href="#exam" data-scope="${b.id}">모의고사 시작</a></div></article></div>
+ <div class="prog"><span>푼 문제 ${n} / ${ps.length} · 맞힌 문제 ${ps.filter(p=>st(p.id)==="ok").length}</span><i><b style="width:${pct(n,ps.length)}%"></b></i></div>
+ <h2 class="h2" id="toc">차례</h2>${toc}`}
+
+const vis=p=>(ui.fk==="all"||p.k===ui.fk)&&(ui.fs==="all"||(ui.fs==="un"&&!st(p.id))||(ui.fs==="no"&&st(p.id)==="no")||(ui.fs==="done"&&!!st(p.id)));
+const rowH=p=>{const s=st(p.id)||"";return `<a class="row" href="#p${p.id}"><span class="dot ${s}" aria-label="${s==="ok"?"맞힘":s==="no"?"틀림":"안 품"}"></span><span class="tag ${KIND[p.k][1]}">${KIND[p.k][0]}</span><span class="rt">${esc(p.t)}</span><span class="lv l${p.lv}">${LV[p.lv]}</span></a>`};
+function vChap(c){
+ const C=CH[c],b=bookOf(c),cp=chP(c);
+ const fk=[["all","모든 유형"]].concat(Object.keys(KIND).map(k=>[k,KIND[k][0]])).map(([v,l])=>`<button class="chip" data-fk="${v}" aria-pressed="${ui.fk===v}">${l}</button>`).join("");
+ const fs=[["all","모두"],["un","안 푼 문제"],["no","틀린 문제"],["done","푼 문제"]].map(([v,l])=>`<button class="chip" data-fs="${v}" aria-pressed="${ui.fs===v}">${l}</button>`).join("");
+ const secs=C.s.map((s,i)=>{const all=cp.filter(p=>p.s===i),sp=all.filter(vis);
+  return `<div class="sec" id="s${c}-${i}"><div class="sh"><b>${secName(c,i)}</b><span>${b.name} ${s[2]}쪽 · ${all.length}문제</span></div>${sp.length?sp.map(rowH).join(""):`<div class="empty">${all.length?"조건에 맞는 문제가 없어":"이 절에는 문제가 없어"}</div>`}</div>`}).join("");
+ const prev=CH[c-1]?`<a class="ghost" href="#c${c-1}">← ${c-1}강 ${CH[c-1].t}</a>`:"<span></span>",next=CH[c+1]?`<a class="ghost" href="#c${c+1}">${c+1}강 ${CH[c+1].t} →</a>`:"<span></span>";
+ return `<a class="back" href="#${b.id}">← ${b.name} 차례</a><p class="ser">${c}강</p><h1>${C.t}</h1><p class="lead">${b.name} ${C.pg}쪽 · 문제 ${cp.length}개 · 푼 문제 ${solved(cp)} · 맞힌 문제 ${cp.filter(p=>st(p.id)==="ok").length}</p>
+ <div class="filters"><div class="chips" role="group" aria-label="유형">${fk}</div><div class="chips" role="group" aria-label="상태">${fs}</div></div>${secs}<div class="cnav">${prev}${next}</div>`}
+
+function sentH(p,g){let n=0;
+ let h=esc(p.q).replace(/\[([^\]]+)\]/g,(m,t)=>{const i=n++;if(p.k==="err"){let c="u";if(g){if(i===p.a)c+=" good";else if(g.g===i)c+=" bad"}return `<span class="${c}"><span>${t}</span><b>(${"ABCD"[i]})</b></span>`}return `<span class="u1">${t}</span>`});
+ return h.replace(/_{3,}/g,()=>g&&p.k==="blank"?`<span class="blank on">${esc(p.o[p.a])}</span>`:g&&p.k==="fill"?`<span class="blank on">${esc(p.a[0])}</span>`:`<span class="blank"></span>`)}
+function optsH(p,sel,g){const sg=segs(p);
+ return `<div class="opts">${ord(p).map((oi,pos)=>{let c="opt";if(g){if(oi===p.a)c+=" ok";else if(g.g===oi)c+=" no"}else if(sel===oi)c+=" sel";
+  const txt=p.k==="err"?`(${"ABCD"[oi]}) ${esc(sg[oi])}`:esc(p.o[oi]);
+  return `<button class="${c}" data-o="${oi}" ${g?"disabled":""} aria-pressed="${sel===oi}"><span class="bub">${CIR[pos]}</span><span class="ot">${txt}</span></button>`}).join("")}</div>`}
+function qPane(p,extra){const C=CH[p.c],b=bookOf(p.c);
+ return `<section class="pane"><div class="tags"><span class="tag ${KIND[p.k][1]}">${KIND[p.k][0]}</span><span class="lv l${p.lv}">${LV[p.lv]}</span></div><h1 class="pt">${esc(p.t)}</h1><p class="src">${b.name} ${p.c}강 ${secName(p.c,p.s)} · ${C.s[p.s][2]}쪽</p><p class="ins">${INS[p.k]}</p><div class="sent">${sentH(p,extra)}</div></section>`}
+
+function vProb(p){
+ const C=CH[p.c],list=chP(p.c),i=list.indexOf(p),rec=S.r[p.id],g=rec&&!ui.retry[p.id]?rec:null;
+ const sel=ui.sel[p.id],hs=ui.hints[p.id]||0,open=!!ui.open[p.id];
+ const area=OBJ(p.k)?optsH(p,sel,g):`<label class="help" for="ans" style="display:block;margin:0 0 6px">${p.k==="fix"?"밑줄 친 부분을 고친 형태만 써":"빈칸에 들어갈 말만 써"}</label><input class="inp" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" ${g?`disabled value="${esc(g.g)}"`:`value="${esc(ui.draft[p.id]||"")}"`} placeholder="${p.k==="fix"?"예: had been":"영어로 입력"}"><p class="help">대소문자와 끝의 마침표는 상관없어.</p>`;
+ const res=g?(g.s==="ok"?`<p class="res ok">정답이야${g.n>1?`<small>${g.n}번째 시도</small>`:""}</p>`:`<p class="res no">틀렸어${!OBJ(p.k)?`<small>내 답: ${esc(g.g||"(비워 둠)")}</small>`:""}</p>`):"";
+ const self=g&&g.s==="no"&&!OBJ(p.k)&&g.g?`<button class="ghost" id="selfok">내 답도 맞아</button>`:"";
+ const hints=hs?`<ol class="hints">${p.h.slice(0,hs).map((h,k)=>`<li><b>힌트 ${k+1}</b>${esc(h)}</li>`).join("")}</ol>`:"";
+ const sol=g&&open?`<div class="sol"><p><span class="lab">정답</span> <span class="serif">${esc(ansText(p))}</span></p><p class="exp">${esc(p.e)}</p></div>`:"";
+ const prev=list[i-1],next=list[i+1];
+ return `<div class="ptop"><a class="back" href="#c${p.c}">← ${p.c}강 ${C.t}</a><span>${secName(p.c,p.s)}</span><span>${i+1} / ${list.length}</span></div>
+ <div class="pgrid">${qPane(p,g)}<section class="pane"><h2 class="ah">답안</h2>${area}
+ <div class="acts">${g?`<button class="btn" id="retry">다시 풀기</button>`:`<button class="btn" id="grade">채점하기 <kbd>Ctrl+↵</kbd></button>`}<button class="ghost" id="hint" ${hs>=2?"disabled":""}>힌트 ${hs}/2</button>${self}</div>${hints}${res}
+ <button class="ghost solbtn" id="sol" ${g?"":"disabled"}>${g?(open?"정답과 해설 닫기":"정답과 해설 보기"):"정답과 해설 · 한 번 채점하면 열려"}</button>${sol}</section></div>
+ <nav class="pnav">${prev?`<a class="ghost" href="#p${prev.id}">← 이전 문제</a>`:`<a class="ghost" href="#c${p.c}">← ${p.c}강 목록</a>`}${next?`<a class="btn" href="#p${next.id}">다음 문제 →</a>`:CH[p.c+1]?`<a class="btn" href="#p${chP(p.c+1)[0].id}">${p.c+1}강 첫 문제 →</a>`:`<a class="btn" href="#me">내 기록 보기</a>`}</nav>`}
+
+/* 모의고사 */
+function vExam(){
+ if(EX&&!EX.done)return exRun();
+ if(EX&&EX.done)return exResult();
+ const sc=[["all","전체"]].concat(BOOKS.map(b=>[b.id,b.name])).map(([v,l])=>`<button class="chip" data-sc="${v}" aria-pressed="${ui.scope===v}">${l}</button>`).join("");
+ const nn=[10,20,30].map(v=>`<button class="chip" data-en="${v}" aria-pressed="${ui.exN===v}">${v}문제</button>`).join("");
+ const tt=[[0,"제한 없음"],[10,"10분"],[20,"20분"],[30,"30분"]].map(([v,l])=>`<button class="chip" data-et="${v}" aria-pressed="${ui.exT===v}">${l}</button>`).join("");
+ return `<a class="back" href="#home">← 편입 영어 문법</a><h1>모의고사</h1><p class="lead">고른 범위에서 무작위로 문제를 뽑아. 풀 때는 채점하지 않고, 다 풀고 제출하면 한꺼번에 채점해. 결과는 내 기록에도 남아.</p>
+ <div class="setup"><div><h3>범위</h3><div class="chips">${sc}</div></div><div><h3>문항 수</h3><div class="chips">${nn}</div></div><div><h3>제한 시간</h3><div class="chips">${tt}</div></div><div><button class="btn alt" id="exstart">시작하기</button></div></div>`}
+function exRun(){const p=byId[EX.ids[EX.i]],a=EX.ans[p.id],n=EX.ids.length,last=EX.i===n-1;
+ const area=OBJ(p.k)?optsH(p,a,null):`<input class="inp" id="exans" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(a||"")}" placeholder="${p.k==="fix"?"고친 형태만":"빈칸에 들어갈 말만"}">`;
+ const done=EX.ids.filter(id=>EX.ans[id]!==undefined&&EX.ans[id]!=="").length;
+ return `<div class="exbar"><div><p class="ser">모의고사 · ${EX.label}</p><b>${EX.i+1} / ${n}</b> <span class="lv">· 답한 문제 ${done}</span></div><span class="timer" id="timer">${EX.lim?fmt(EX.lim-(Date.now()-EX.t0)):fmt(Date.now()-EX.t0)}</span></div>
+ <div class="pgrid">${qPane(p,null)}<section class="pane"><h2 class="ah">답안</h2>${area}<div class="acts">${EX.i?`<button class="ghost" data-ex="prev">← 이전</button>`:""}${last?`<button class="btn alt" data-ex="submit">제출하고 채점</button>`:`<button class="btn" data-ex="next">다음 →</button>`}</div><p class="help">${last?"제출하면 바로 채점해. 답하지 않은 문제는 기록에 남기지 않아.":"이전으로 돌아가 답을 바꿀 수 있어."}</p>${!last?`<button class="ghost solbtn" data-ex="submit">지금 제출하기</button>`:""}</section></div>`}
+const fmt=ms=>{const s=Math.max(0,Math.round(ms/1000));return `${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`};
+function exStart(){const pool=ui.scope==="all"?P:P.filter(p=>bookOf(p.c).id===ui.scope);
+ EX={ids:shuffle(pool.map(p=>p.id)).slice(0,ui.exN),i:0,ans:{},t0:Date.now(),lim:ui.exT*60000,done:false,label:ui.scope==="all"?"전체":BOOKS.find(b=>b.id===ui.scope).name};keep()}
+function exFinish(){if(!EX||EX.done)return;EX.done=true;EX.used=Date.now()-EX.t0;EX.res={};
+ EX.ids.forEach(id=>{const p=byId[id],g=EX.ans[id];if(g===undefined||g==="")return;const ok=check(p,g);EX.res[id]=ok;const prev=S.r[id]||{n:0};S.r[id]={s:ok?"ok":"no",g,n:(prev.n||0)+1,t:Date.now()}});save();keep()}
+function exResult(){const n=EX.ids.length,ok=EX.ids.filter(id=>EX.res[id]===true).length;
+ const rows=EX.ids.map((id,k)=>{const p=byId[id],r=EX.res[id];return `<a class="row" href="#p${id}"><span class="dot ${r===true?"ok":r===false?"no":""}"></span><span class="tag ${KIND[p.k][1]}">${KIND[p.k][0]}</span><span class="rt">${k+1}. ${esc(p.t)} <span class="lv">· ${p.c}강</span></span><span class="lv ${r===true?"l1":r===false?"l3":""}">${r===true?"정답":r===false?"오답":"미응답"}</span></a>`}).join("");
+ return `<a class="back" href="#home">← 편입 영어 문법</a><p class="ser">모의고사 결과 · ${EX.label}</p><div class="big"><b>${ok}</b><span>/ ${n}</span></div><p class="lead">${pct(ok,n)}점 · 걸린 시간 ${fmt(EX.used)} · 문제를 누르면 힌트와 해설을 볼 수 있어.</p><div class="sec"><div class="sh"><b>문항별 결과</b><span>정답 ${ok} · 오답 ${Object.values(EX.res).filter(v=>!v).length} · 미응답 ${n-Object.keys(EX.res).length}</span></div>${rows}</div><div class="cnav"><button class="ghost" id="exagain">같은 조건으로 다시</button><button class="btn" id="exnew">새 모의고사</button></div>`}
+
+/* 내 기록 */
+function vMe(){const done=solved(P),ok=P.filter(p=>st(p.id)==="ok").length,wr=P.filter(p=>st(p.id)==="no");
+ const bars=Object.keys(CH).map(Number).map(c=>{const cp=chP(c),d=solved(cp),o=cp.filter(p=>st(p.id)==="ok").length;return `<a class="bar" href="#c${c}"><span class="bn">${c}강 ${CH[c].t}</span><i><b style="width:${pct(d,cp.length)}%"></b></i><span class="v">${d}/${cp.length}</span><span class="m">${d?pct(o,d)+"%":"—"}</span></a>`}).join("");
+ const wl=wr.length?wr.map(rowH).join(""):`<div class="empty">틀린 문제가 없어. 틀리면 여기 모이고, 다시 맞히면 빠져.</div>`;
+ return `<h1>내 기록</h1><div class="figs"><div class="fig"><b>${done}</b><span>푼 문제 / ${P.length}</span></div><div class="fig"><b>${ok}</b><span>맞힌 문제</span></div><div class="fig"><b>${done?pct(ok,done)+"%":"—"}</b><span>정답률</span></div><div class="fig"><b>${wr.length}</b><span>틀린 문제</span></div></div>
+ <h2 class="h2">강별 진행</h2><p class="help" style="margin:-6px 0 10px">막대는 푼 비율, 오른쪽 숫자는 푼 문제 중 맞힌 비율이야.</p><div class="bars">${bars}</div>
+ <h2 class="h2">틀린 문제</h2><div class="sec" style="margin-top:0">${wl}</div>
+ <div class="cnav"><span class="help">기록은 문제마다 가장 최근 채점 결과로 남아.</span><button class="ghost" id="reset">${ui.reset?"한 번 더 누르면 모든 기록이 지워져":"기록 초기화"}</button></div>`}
+
+/* 라우팅 */
+function route(){clearInterval(tick);const h=decodeURIComponent(location.hash.slice(1))||"home";let html,title="편입 영어 문법",nav="home";
+ if(/^b[123]$/.test(h)){const b=BOOKS.find(x=>x.id===h);html=vBook(b);title=b.name+" · 편입 영어 문법"}
+ else if(/^c\d+$/.test(h)&&CH[+h.slice(1)]){const c=+h.slice(1);html=vChap(c);title=`${c}강 ${CH[c].t} · 편입 영어 문법`}
+ else if(h[0]==="p"&&byId[h.slice(1)]){const p=byId[h.slice(1)];html=vProb(p);title=p.t+" · 편입 영어 문법"}
+ else if(h==="exam"){html=vExam();nav="exam";title="모의고사 · 편입 영어 문법"}
+ else if(h==="me"){html=vMe();nav="me";title="내 기록 · 편입 영어 문법"}
+ else html=vHome();
+ $("#app").innerHTML=html;document.title=title;
+ document.querySelectorAll(".nav a").forEach(a=>a.dataset.n===nav?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));
+ if(h==="exam"&&EX&&!EX.done)tick=setInterval(()=>{const el=$("#timer");if(!el)return;if(EX.lim){const left=EX.lim-(Date.now()-EX.t0);el.textContent=fmt(left);el.classList.toggle("low",left<60000);if(left<=0){exFinish()}}else el.textContent=fmt(Date.now()-EX.t0)},1000);
+}
+let lastH=null;
+function go(){const h=location.hash;if(h!==lastH){lastH=h;route();if(ui.sec){const el=document.getElementById(ui.sec);ui.sec=null;if(el){el.scrollIntoView();return}}window.scrollTo(0,0)}else keep()}
+function keep(){const y=window.scrollY;route();window.scrollTo(0,y)}
+window.addEventListener("hashchange",go);
+
+const cur=()=>{const h=location.hash.slice(1);return h[0]==="p"?byId[h.slice(1)]:null};
+function grade(p,g){const ok=check(p,g);const prev=S.r[p.id]||{n:0};S.r[p.id]={s:ok?"ok":"no",g,n:(prev.n||0)+1,t:Date.now()};delete ui.retry[p.id];delete ui.sel[p.id];save();keep()}
+function tryGrade(){const p=cur();if(!p||(S.r[p.id]&&!ui.retry[p.id]))return;
+ if(OBJ(p.k)){if(ui.sel[p.id]===undefined)return;grade(p,ui.sel[p.id])}else{const v=($("#ans")||{}).value||"";if(!v.trim()){$("#ans").focus();return}grade(p,v.trim())}}
+
+document.addEventListener("click",e=>{const t=e.target.closest("button,a");if(!t)return;const p=cur();
+ if(t.dataset.scope)ui.scope=t.dataset.scope;
+ if(t.dataset.sec)ui.sec=t.dataset.sec;
+ if(t.dataset.goto){document.getElementById(t.dataset.goto).scrollIntoView({behavior:"smooth"});return}
+ if(t.dataset.fk){ui.fk=t.dataset.fk;keep();return}
+ if(t.dataset.fs){ui.fs=t.dataset.fs;keep();return}
+ if(t.dataset.sc){ui.scope=t.dataset.sc;keep();return}
+ if(t.dataset.en){ui.exN=+t.dataset.en;keep();return}
+ if(t.dataset.et){ui.exT=+t.dataset.et;keep();return}
+ if(t.id==="exstart"){exStart();window.scrollTo(0,0);return}
+ if(t.id==="exagain"){exStart();window.scrollTo(0,0);return}
+ if(t.id==="exnew"){EX=null;keep();return}
+ if(t.dataset.ex){if(t.dataset.ex==="prev")EX.i--;else if(t.dataset.ex==="next")EX.i++;else exFinish();route();window.scrollTo(0,0);return}
+ if(t.dataset.o!==undefined&&!t.disabled){const o=+t.dataset.o;if(location.hash==="#exam"&&EX&&!EX.done){EX.ans[EX.ids[EX.i]]=o;keep()}else if(p){ui.sel[p.id]=o;keep()}return}
+ if(!p&&t.id==="reset"){if(ui.reset){S={r:{},u:0};save();ui.reset=0}else{ui.reset=1;setTimeout(()=>{if(ui.reset){ui.reset=0;if(location.hash==="#me")keep()}},4000)}keep();return}
+ if(!p)return;
+ if(t.id==="grade")tryGrade();
+ else if(t.id==="retry"){ui.retry[p.id]=1;ui.open[p.id]=0;ui.draft[p.id]="";keep()}
+ else if(t.id==="hint"){ui.hints[p.id]=Math.min(2,(ui.hints[p.id]||0)+1);keep()}
+ else if(t.id==="sol"){ui.open[p.id]=!ui.open[p.id];keep()}
+ else if(t.id==="selfok"){S.r[p.id].s="ok";save();keep()}
+});
+document.addEventListener("input",e=>{if(e.target.id==="ans"){const p=cur();if(p)ui.draft[p.id]=e.target.value}if(e.target.id==="exans"&&EX)EX.ans[EX.ids[EX.i]]=e.target.value});
+document.addEventListener("keydown",e=>{const p=cur();
+ if((e.ctrlKey||e.metaKey)&&e.key==="Enter"&&p){e.preventDefault();tryGrade();return}
+ if(e.key==="Enter"&&e.target.id==="ans"){e.preventDefault();tryGrade();return}
+ if(e.key==="Enter"&&e.target.id==="exans"){e.preventDefault();const b=document.querySelector('[data-ex="next"],[data-ex="submit"]');if(b)b.click();return}
+ const tag=e.target.tagName;if(tag==="INPUT"||tag==="TEXTAREA"||e.ctrlKey||e.metaKey||e.altKey)return;
+ if(/^[1-4]$/.test(e.key)){const q=location.hash==="#exam"&&EX&&!EX.done?byId[EX.ids[EX.i]]:p;if(!q||!OBJ(q.k))return;if(q===p&&S.r[p.id]&&!ui.retry[p.id])return;const o=ord(q)[+e.key-1];if(q===p)ui.sel[p.id]=o;else EX.ans[q.id]=o;keep()}
+});
+
+window.claude?.hot?.snapshot?.(()=>({EX,fk:ui.fk,fs:ui.fs,scope:ui.scope,exN:ui.exN,exT:ui.exT}));
+const boot=d=>{if(d&&d.EX)EX=d.EX;if(d&&d.fk){ui.fk=d.fk;ui.fs=d.fs||"all";ui.scope=d.scope||"all";ui.exN=d.exN||10;ui.exT=d.exT||0}go();setSave("기록은 이 브라우저에 저장돼")};
+window.claude?.hot?.ready?window.claude.hot.ready(boot):boot(window.claude?.hot?.data??{});
+}
+</script>
+</body>
+</html>
